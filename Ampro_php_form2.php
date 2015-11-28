@@ -48,18 +48,18 @@ echo "<br>";
 
 
 require_once("connMysql.php"); 
-$dbh = new PDO("mysql:host =localhost;port=3306;dbname = $db_name;", $db_username,$db_password);  
+$con=mysql_connect($db_host,$db_username,$db_password);
+mysql_select_db($db_name);
+$rowcount=0;
+$sql = "SELECT COUNT(*) FROM `PCB_Tracking` WHERE PCB=$barcode";
 
-$sql = "SELECT COUNT(*) FROM `PCB_Tracking` WHERE PCB='343434'";
-//$sql = "SELECT COUNT(*) FROM PCB_Tracking;";
-$query=$dbh->prepare($sql);
-$result=$query->execute();
-echo $result;
-$count=$query->rowCount();
-echo $count;
+if ($barcode != "") { 
+$result=mysql_query($sql);
+$data=mysql_fetch_assoc($result);
+$rowcount= mysql_result($result, 0);
+}
 
-//if (empty($result) AND  ($result->rowCount() = 0)) {
-if ( $count == '0') {
+if ( $rowcount == 0) {
 
 echo "<br>";
 echo "Barcode is not in database";
