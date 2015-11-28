@@ -48,14 +48,15 @@ echo "<br>";
 
 
 require_once("connMysql.php"); 
-$dbh = new PDO("mysql:host =localhost;port=3306;dbname = $db_name;", $db_username,$db_password);  
+$dbh = new PDO("mysql:host =192.168.1.136,port=3306;dbname = $db_name;", $db_username,$db_password);  
 
-$sql = "SELECT COUNT(*) FROM `PCB_Tracking` WHERE PCB='343434'";
-//$sql = "SELECT COUNT(*) FROM PCB_Tracking;";
+
+//$sql = "SELECT COUNT(*) FROM `PCB_Tracking` WHERE PCB='343434'";
+$sql = "SELECT COUNT(*) FROM PCB_Tracking;";
 $query=$dbh->prepare($sql);
 $result=$query->execute();
 echo $result;
-$count=$query->rowCount();
+$count=$result->rowCount();
 echo $count;
 
 //if (empty($result) AND  ($result->rowCount() = 0)) {
