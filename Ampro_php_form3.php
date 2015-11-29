@@ -67,7 +67,7 @@ $sql = "SELECT * FROM `PCB_Tracking` WHERE PCB='$barcode'";
 
 if (($barcode != "") and ($error == 0)) {
    $result=mysql_query($sql);
-   $rowcount=mysql_num_rows($result); 
+   $rowcount=mysql_num_rows($result);
 }
 
 if ( $rowcount == 0) {
@@ -85,30 +85,31 @@ if ( $rowcount == 0) {
          echo "Create new PCB record successfully, Please Check In!\n";
          }
       mysql_close($con);
-   ?>
-      <form method="post" action="Ampro_process.php" >
-         <input type="hidden" name="barcode"
-           value="<?php echo $_POST['barcode']; ?>">
-         <input type="submit" name="submit" value="Check In">
-      </form>
-   <?php
-   }
-   elseif ($error==0) {
-      echo "<br>";
-      echo "Barcode is not in database. Please send this PCB to AOI Station";
-      echo "<br>";
-      ?>
+?>
       <form method="post" action="Ampro_process.php" >
          <input type="hidden" name="barcode"
            value="<?php echo $_POST['barcode']; ?>">
          <input type="submit" name="submit" value="Check In">
       </form>
 <?php
-      
    }
+   elseif (($error==0) and ($rowcount == 0)) {
+      echo "<br>";
+      echo "Barcode is not in database. Please send this PCB to AOI Station";
+      echo "<br>";
+   }
+
+}
 else {
    mysql_close($con);
-
+   if ($error==0) {
+?>
+   <form method="post" action="Ampro_process.php" >
+      <input type="hidden" name="barcode"
+        value="<?php echo $_POST['barcode']; ?>">
+      <input type="submit" name="submit" value="Check In">
+   </form>
+<?php
    }
 }
 ?>
