@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $barcodeerror = "Barcode is required";
      $error=1;
    }
-   elseif (strlen($_POST["barcode"] < 13)) {
-     $barcodeerror = "Invalid Bard. Please rescan!";
+   elseif (strlen($_POST["barcode"]) != 13) {
+     $barcodeerror = "Invalid Barcode. Please rescan!";
      $error=1;
    }
    else {
@@ -36,6 +36,7 @@ function test_input($data) {
    $data = stripslashes($data);
    $data = htmlspecialchars($data);
    return $data;
+   echo $data;
 }
 ?>
 
@@ -62,12 +63,11 @@ require_once("connMysql.php");
 $con=mysql_connect($db_host,$db_username,$db_password);
 mysql_select_db($db_name);
 $rowcount=0;
-$sql = "SELECT COUNT(*) FROM `PCB_Tracking` WHERE PCB=$barcode";
+$sql = "SELECT * FROM `PCB_Tracking` WHERE PCB='$barcode'";
 
-if (($barcode != "") and ($error = 0)) {
+if (($barcode != "") and ($error == 0)) {
    $result=mysql_query($sql);
-   $data=mysql_fetch_assoc($result);
-   $rowcount= mysql_result($result, 0);
+   $rowcount=mysql_num_rows($result); 
 }
 
 if ( $rowcount == 0) {
@@ -97,16 +97,18 @@ if ( $rowcount == 0) {
       echo "<br>";
       echo "Barcode is not in database. Please send this PCB to AOI Station";
       echo "<br>";
-   }
-else {
-   mysql_close($con);
-?>
+      ?>
       <form method="post" action="Ampro_process.php" >
          <input type="hidden" name="barcode"
            value="<?php echo $_POST['barcode']; ?>">
          <input type="submit" name="submit" value="Check In">
       </form>
 <?php
+      
+   }
+else {
+   mysql_close($con);
+
    }
 }
 ?>
