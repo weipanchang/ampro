@@ -13,12 +13,20 @@ $barcode = "";
 $comment = "";
 $barcodeerror = "";
 $commenterror = "";
+$error=0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if (empty($_POST["barcode"])) {
      $barcodeerror = "Barcode is required";
-   } else {
+     $error=1;
+   }
+   elseif (strlen($_POST["barcode"] < 13)) {
+     $barcodeerror = "Invalid Bard. Please rescan!";
+     $error=1;
+   }
+   else {
      $barcode = test_input($_POST["barcode"]);
+     $error=0;
    }
 
 }
@@ -47,6 +55,7 @@ echo "<br>";
 echo $comment;
 echo "<br>";
 
+
 include("Ampro_station_info.php");
 require_once("connMysql.php");
 
@@ -55,14 +64,14 @@ mysql_select_db($db_name);
 $rowcount=0;
 $sql = "SELECT COUNT(*) FROM `PCB_Tracking` WHERE PCB=$barcode";
 
-if ($barcode != "") {
+if (($barcode != "") and ($error = 0)) {
    $result=mysql_query($sql);
    $data=mysql_fetch_assoc($result);
    $rowcount= mysql_result($result, 0);
 }
 
 if ( $rowcount == 0) {
-   if ($station_type =="AOI") {
+   if (($station_type =="AOI") and ($error == 0)) {
       $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
       `scrapped`) VALUES('$barcode', '$line_number','$station_type',1,0)";
       mysql_select_db($db_name);
@@ -76,32 +85,31 @@ if ( $rowcount == 0) {
          echo "Create new PCB record successfully, Please Check In!\n";
          }
       mysql_close($con);
-?>
-   <form method="post" action="Ampro_process.php" >
-      <input type="hidden" name="barcode"
-        value="<?php echo $_POST['barcode']; ?>">
-      <input type="submit" name="submit" value="Check In">
-   </form>
-<?php
+   ?>
+      <form method="post" action="Ampro_process.php" >
+         <input type="hidden" name="barcode"
+           value="<?php echo $_POST['barcode']; ?>">
+         <input type="submit" name="submit" value="Check In">
+      </form>
+   <?php
    }
-   else {
+   elseif ($error==0) {
       echo "<br>";
       echo "Barcode is not in database. Please send this PCB to AOI Station";
       echo "<br>";
    }
-}
 else {
    mysql_close($con);
 ?>
       <form method="post" action="Ampro_process.php" >
-      <input type="hidden" name="barcode"
-        value="<?php echo $_POST['barcode']; ?>">
-      <input type="submit" name="submit" value="Check In">
-   </form>
+         <input type="hidden" name="barcode"
+           value="<?php echo $_POST['barcode']; ?>">
+         <input type="submit" name="submit" value="Check In">
+      </form>
 <?php
+   }
 }
 ?>
 
 </body>
 </html>
-
