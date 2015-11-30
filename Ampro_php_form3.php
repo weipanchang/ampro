@@ -36,11 +36,13 @@ function test_input($data) {
    $data = stripslashes($data);
    $data = htmlspecialchars($data);
    return $data;
-   echo $data;
 }
+
+include("Ampro_station_info.php");
 ?>
 
-<h2>Ampro System PCB Check in/out</h2>
+<h1 style="text-align:center";>Ampro System PCB Check in/out</h1>
+<h2> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h2>
 <form method = "post" action="">
 <p><span class="error">* Please Scan the Barcode *</span></p>
    Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">
@@ -56,8 +58,6 @@ echo "<br>";
 echo $comment;
 echo "<br>";
 
-
-include("Ampro_station_info.php");
 require_once("connMysql.php");
 
 $con=mysql_connect($db_host,$db_username,$db_password);
@@ -66,14 +66,14 @@ $rowcount=0;
 $sql = "SELECT * FROM `PCB_Tracking` WHERE PCB='$barcode'";
 
 if (($barcode != "") and ($error == 0)) {
-   $result=mysql_query($sql);
+   $result=mysql_query($sql, $con);
    $rowcount=mysql_num_rows($result);
 }
 
 if ( $rowcount == 0) {
    if (($station_type =="AOI") and ($error == 0)) {
       $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
-      `scrapped`) VALUES('$barcode', '$line_number','$station_type',1,0)";
+      `scrapped`) VALUES('$barcode', '$line_number','$station_type',0,0)";
       mysql_select_db($db_name);
       $result=mysql_query($sql, $con);
          if(! $result ) {
@@ -83,6 +83,8 @@ if ( $rowcount == 0) {
          echo "<br>";
          echo "<br>";
          echo "Create new PCB record successfully, Please Check In!\n";
+         echo "<br>";
+         echo "<br>";
          }
       mysql_close($con);
 ?>
