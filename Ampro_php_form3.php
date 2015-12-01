@@ -110,7 +110,7 @@ else {
    <form method="post" action="Ampro_process.php" >
       <input type="hidden" name="barcode"
         value="<?php echo $_POST['barcode']; ?>">
-      <input type="submit" name="submit" style="color: #FF0000" value="Check In">
+      <input type="submit" name="submit" style="color: #FF0000; font-size: larger;" value="Check In">
    </form>
 <?php
    }

@@ -54,13 +54,13 @@ if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and 
     <input type="hidden" name="barcode"
     value="<?php echo $_POST['barcode']; ?>"
     <br>
-    (Please limit to  500 characters):<textarea name="note" id="note" cols=70 rows=7></textarea>
+    (Please limit to  500 characters):<textarea name="note" id="note" cols=70 rows=7 style="color: #FF0000; font-size: larger;"></textarea>
     <br>
     <br>
     <input type="checkbox" name="Scrapped" value="Scrapped"> Scrapped this PCB <br>
     <br>
     <br>
-    <input type="submit" name="submit2" style="color: #FF0000" value="Check Out">
+    <input type="submit" name="submit2" style="color: #FF0000; font-size: larger;" value="Check Out">
 </form>
 <br>
 <!--Note (Please limit to  500 characters): <textarea name="comment" rows="5" cols="80" form="usrform"></textarea>-->
