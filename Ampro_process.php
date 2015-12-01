@@ -8,19 +8,20 @@
 <body>
 
 <?php
-//echo $_POST['barcode'];
+echo $_POST['barcode'];
 $barcode = $_POST['barcode'];
 //echo $barcode;
+
 include("Ampro_station_info.php");
 require_once("connMysql.php");
 ?>
 <h1 style="text-align:center";> <?php echo "Ampro System PCB Check in/out"; ?></php></h1>
-<h2> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h2>
-<h5> <?php echo "<br>";
+<h3 style="text-align:center";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
+<h4> <?php echo "<br>";
 echo "You currently are processing PCB - ";
 echo $barcode;
 echo "<br>";
-?></php?></h5>
+?></php?></h4>
 
 <?php
 $con=mysql_connect($db_host,$db_username,$db_password);
@@ -29,25 +30,73 @@ $sql = "SELECT * FROM `PCB_Tracking` WHERE `PCB`='$barcode' order by time DESC l
 $result=mysql_query($sql);
 $row=mysql_fetch_array($result);
 
-if (!(($row['line'] == $line_number) and ($row['station'] == $station_type))) {
-?>
-<h5> <?php echo "<br>";
-echo "Message from last station: ";
-echo $row['station'];
-echo " ";
-echo $row['line'];
-echo "<br>";
-echo $row['note'];
-echo "<br>";
-?></php?></h5>
-<?php
-}
-
 if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
+    ?>
+    <h5>
+    <?php echo "<br>";
+    echo "Message from last station: ";
+    echo $row['station'];
+    echo " ";
+    echo $row['line'];
+    echo "<br>";
+    echo $row['note'];
+    echo "<br>";
+    ?>
+    </php?></h5>
+<?php
+
     $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
-      `scrapped`) VALUES('$barcode', '$line_number','$station_type',1,0)";
+      `scrapped`, `note`) VALUES('$barcode', '$line_number','$station_type',1,0, 'Checked in')";
     $result=mysql_query($sql, $con);
 } 
+?>
+
+
+
+<form method="post" action="" id="usrform" >
+    <input type="hidden" name="barcode"
+    value="<?php echo $_POST['barcode']; ?>"
+    <br>
+    Note (Please limit to  500 characters):<textarea name="note" id="note" cols=40 rows=4>
+
+    </textarea>
+    
+    <input type="checkbox" name="Scrapped" value="Scrapped"> Scrapped this PCB <br>
+    <br>
+    <br>
+    <input type="submit" name="submit2" value="Check Out">
+</form>
+<br>
+<!--Note (Please limit to  500 characters): <textarea name="comment" rows="5" cols="80" form="usrform"></textarea>-->
+<br>
+<br>
+<br>
+
+<?php
+if (isset($_POST['submit2'])){
+    $note = htmlspecialchars($_POST['note']);
+
+    if(isset($_POST['Scrapped'])){
+        
+        
+
+        $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
+        `scrapped`, `note`) VALUES('$barcode', '$line_number','$station_type',0,1,'$$note')";
+    }
+    else {
+
+        $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
+        `scrapped`, `note`) VALUES('$barcode', '$line_number','$station_type',0,0,'$note')";
+    }   
+
+    mysql_select_db($db_name);
+    //$result=mysql_query($sql, $con);
+    mysql_query($sql) or die ('error: ' . mysql_error());
+
+   header("location:Ampro_php_form3.php"); 
+
+}
+
 ?>
 
 </body>

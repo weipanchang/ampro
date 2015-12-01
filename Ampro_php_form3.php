@@ -42,17 +42,18 @@ include("Ampro_station_info.php");
 ?>
 
 <h1 style="text-align:center";>Ampro System PCB Check in/out</h1>
-<h2> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h2>
+<h3 style="text-align:center";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
 <form method = "post" action="">
 <p><span class="error">* Please Scan the Barcode *</span></p>
-   Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">
+<!--   Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">-->
+   Barcode:  <input type="text" name="barcode" value="">
    <span class="error"> <?php echo $barcodeerror;?></span>
    <br><br>
    <br><br>
 </form>
 
 <?php
-echo "<h2>Your Input:</h2>";
+echo "<h3>Your Input:</h3>";
 echo $barcode;
 echo "<br>";
 echo $comment;
@@ -71,7 +72,7 @@ if (($barcode != "") and ($error == 0)) {
 }
 
 if ( $rowcount == 0) {
-   if (($station_type =="AOI") and ($error == 0)) {
+   if (($station_type =="AOI") and ($error == 0) and ($barcode != "")) {
       $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
       `scrapped`) VALUES('$barcode', '$line_number','$station_type',0,0)";
       mysql_select_db($db_name);
@@ -95,7 +96,7 @@ if ( $rowcount == 0) {
       </form>
 <?php
    }
-   elseif (($error==0) and ($rowcount == 0)) {
+   elseif (($error==0) and ($rowcount == 0) and ($barcode != "")) {
       echo "<br>";
       echo "Barcode is not in database. Please send this PCB to AOI Station";
       echo "<br>";
