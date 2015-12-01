@@ -8,7 +8,6 @@
 <body>
 
 <?php
-echo $_POST['barcode'];
 $barcode = $_POST['barcode'];
 //echo $barcode;
 
@@ -51,20 +50,17 @@ if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and 
 } 
 ?>
 
-
-
 <form method="post" action="" id="usrform" >
     <input type="hidden" name="barcode"
     value="<?php echo $_POST['barcode']; ?>"
     <br>
-    Note (Please limit to  500 characters):<textarea name="note" id="note" cols=40 rows=4>
-
-    </textarea>
-    
+    (Please limit to  500 characters):<textarea name="note" id="note" cols=70 rows=7></textarea>
+    <br>
+    <br>
     <input type="checkbox" name="Scrapped" value="Scrapped"> Scrapped this PCB <br>
     <br>
     <br>
-    <input type="submit" name="submit2" value="Check Out">
+    <input type="submit" name="submit2" style="color: #FF0000" value="Check Out">
 </form>
 <br>
 <!--Note (Please limit to  500 characters): <textarea name="comment" rows="5" cols="80" form="usrform"></textarea>-->
@@ -77,8 +73,6 @@ if (isset($_POST['submit2'])){
     $note = htmlspecialchars($_POST['note']);
 
     if(isset($_POST['Scrapped'])){
-        
-        
 
         $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
         `scrapped`, `note`) VALUES('$barcode', '$line_number','$station_type',0,1,'$$note')";
@@ -90,7 +84,6 @@ if (isset($_POST['submit2'])){
     }   
 
     mysql_select_db($db_name);
-    //$result=mysql_query($sql, $con);
     mysql_query($sql) or die ('error: ' . mysql_error());
 
    header("location:Ampro_php_form3.php"); 

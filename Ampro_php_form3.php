@@ -45,8 +45,8 @@ include("Ampro_station_info.php");
 <h3 style="text-align:center";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
 <form method = "post" action="">
 <p><span class="error">* Please Scan the Barcode *</span></p>
-<!--   Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">-->
-   Barcode:  <input type="text" name="barcode" value="">
+   Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">
+<!--   Barcode:  <input type="text" name="barcode" value="">-->
    <span class="error"> <?php echo $barcodeerror;?></span>
    <br><br>
    <br><br>
@@ -110,7 +110,7 @@ else {
    <form method="post" action="Ampro_process.php" >
       <input type="hidden" name="barcode"
         value="<?php echo $_POST['barcode']; ?>">
-      <input type="submit" name="submit" value="Check In">
+      <input type="submit" name="submit" style="color: #FF0000" value="Check In">
    </form>
 <?php
    }
