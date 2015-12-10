@@ -24,6 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $barcodeerror = "Invalid Barcode. Please rescan!";
      $error=1;
    }
+   elseif  (!(ctype_digit($_POST["barcode"]))) {
+     $barcodeerror = "Invalid Barcode. Please rescan!";
+     $error=1;
+   }
    else {
      $barcode = test_input($_POST["barcode"]);
      $error=0;
@@ -41,8 +45,8 @@ function test_input($data) {
 include("Ampro_station_info.php");
 ?>
 
-<h1 style="text-align:center";>Ampro System PCB Check in/out</h1>
-<h3 style="text-align:center";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
+<h1 style="text-align:center; color:blue; text-decoration: underline";>Ampro System PCB Check in/out</h1>
+<h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
 <form method = "post" action="">
 <p><span class="error">* Please Scan the Barcode *</span></p>
    Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">

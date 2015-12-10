@@ -8,14 +8,18 @@
 <body>
 
 <?php
+if ($_POST['barcode'] == null ) {
+    header("location:Ampro_php_form3.php"); 
+}
+
 $barcode = $_POST['barcode'];
 //echo $barcode;
 
 include("Ampro_station_info.php");
 require_once("connMysql.php");
 ?>
-<h1 style="text-align:center";> <?php echo "Ampro System PCB Check in/out"; ?></php></h1>
-<h3 style="text-align:center";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
+<h1 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Ampro System PCB Check in/out"; ?></php></h1>
+<h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
 <h4> <?php echo "<br>";
 echo "You currently are processing PCB - ";
 echo $barcode;
