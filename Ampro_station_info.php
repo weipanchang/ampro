@@ -1,7 +1,4 @@
 <?php
-
-$station_type='AOI';
-
-$line_number=5;
-
+$station_type='Testing';
+$line_number=2;
 ?>

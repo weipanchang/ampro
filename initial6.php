@@ -16,7 +16,7 @@ while($tbl = mysql_fetch_array($result)) {
 if (!$tblCnt) {
   echo "There are no tables<br />\n";
 } else {
-  echo "There are $tblCnt tables<br />\n";
+  echo "Database connect successfully<br />\n";
 }
 
 ?>
@@ -35,49 +35,25 @@ if (!$tblCnt) {
 $nameErr = $emailErr = $genderErr = $websiteErr = "";
 $name = $email = $gender = $comment = $website = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   if (empty($_POST["name"])) {
-     $nameErr = "Name is required";
-   } else {
-     $name = test_input($_POST["name"]);
-     // check if name only contains letters and whitespace
-     if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-       $nameErr = "Only letters and white space allowed";
-     }
-   }
-  
-   if (empty($_POST["email"])) {
-     $emailErr = "Email is required";
-   } else {
-     $email = test_input($_POST["email"]);
-     // check if e-mail address is well-formed
-     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-       $emailErr = "Invalid email format";
-     }
-   }
-    
-   if (empty($_POST["website"])) {
-     $website = "";
-   } else {
-     $website = test_input($_POST["website"]);
-     // check if URL address syntax is valid (this regular expression also allows dashes in the URL)
-     if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
-       $websiteErr = "Invalid URL";
-     }
-   }
 
-   if (empty($_POST["comment"])) {
-     $comment = "";
-   } else {
-     $comment = test_input($_POST["comment"]);
-   }
-
-   if (empty($_POST["gender"])) {
-     $genderErr = "Gender is required";
-   } else {
-     $gender = test_input($_POST["gender"]);
-   }
+if (empty($_POST["station"])) {
+  $station = "";
+} else {
+  $station = test_input($_POST["station"]);
 }
+
+if (empty($_POST["line"])) {
+  $line = "";
+} else {
+  $line = test_input($_POST["line"]);
+}
+
+   //if (empty($_POST["gender"])) {
+   //  $genderErr = "Gender is required";
+   //} else {
+   //  $gender = test_input($_POST["gender"]);
+   //}
+
 
 function test_input($data) {
    $data = trim($data);
@@ -86,40 +62,45 @@ function test_input($data) {
    return $data;
 }
 ?>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<form action="" method="post">
+<select name="station" >
+<option value=""><?php echo "Select Station Type"; ?></option>
 
-<h2>PHP Form Validation Example</h2>
-<p><span class="error">* required field.</span></p>
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-   Name: <input type="text" name="name" value="<?php echo $name;?>">
-   <span class="error">* <?php echo $nameErr;?></span>
-   <br><br>
-   E-mail: <input type="text" name="email" value="<?php echo $email;?>">
-   <span class="error">* <?php echo $emailErr;?></span>
-   <br><br>
-   Website: <input type="text" name="website" value="<?php echo $website;?>">
-   <span class="error"><?php echo $websiteErr;?></span>
-   <br><br>
-   Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
-   <br><br>
-   Gender:
-   <input type="radio" name="gender" <?php if (isset($gender) && $gender=="female") echo "checked";?>  value="female">Female
-   <input type="radio" name="gender" <?php if (isset($gender) && $gender=="male") echo "checked";?>  value="male">Male
-   <span class="error">* <?php echo $genderErr;?></span>
-   <br><br>
-   <input type="submit" name="submit" value="Submit">
+    <option value="AOI">AOI</option>
+    <option value="Testing">Testing</option>
+    <option value="QA">QA</option>
+    <option value="Repair">Repair</option>
+    <option value="Label">Label</option>
+    <option value="Shipping">Shipping</option>
+
+</select>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<select name="line" >
+<option value=""><?php echo "Select Line number"; ?></option>
+
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    
+
+</select>
+<input type="submit" name="Submit" id="stationsubmit" value="Submit" />
 </form>
-
 <?php
-echo "<h2>Your Input:</h2>";
-echo $name;
-echo "<br>";
-echo $email;
-echo "<br>";
-echo $website;
-echo "<br>";
-echo $comment;
-echo "<br>";
-echo $gender;
+
+if(isset($_POST["station"])) $station = $_POST["station"];
+if(isset($_POST["line"])) $line = $_POST["line"]; 
+if ($station <> ''){
+    $fp  = 'Ampro_station_info.php';
+    $str='<?php'."\n".'$station_type='.'\''.$station.'\''.';'."\n".'$line_number='.$line.';'."\n".'?>'."\n";
+    file_put_contents($fp, $str);
+
+} 
 ?>
 
 </body>
