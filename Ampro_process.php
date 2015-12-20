@@ -64,7 +64,8 @@ if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and 
     <input type="hidden" name="barcode"
     value="<?php echo $_POST['barcode']; ?>"
     <br>
-    Operator:  <input type="text" name="operator" value="">
+    <p><font color="red">Operator Name (Required Field):</font> <input type="text" name="operator" value=""> </p>
+    <br>
     <br>
     (Please limit to  500 characters):<textarea name="note" id="note" cols=70 rows=7 style="color: #FF0000; font-size: larger;"></textarea>
     <br>
