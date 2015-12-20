@@ -51,12 +51,20 @@ if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and 
     $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
       `scrapped`, `note`) VALUES('$barcode', '$line_number','$station_type',1,0, 'Checked in')";
     $result=mysql_query($sql, $con);
+    if (!isset($_POST['operator'])) {
+        $operator = null;
+    }
+    else {
+        $operator = $_POST['operator'];
+    }
 } 
 ?>
 
 <form method="post" action="" id="usrform" >
     <input type="hidden" name="barcode"
     value="<?php echo $_POST['barcode']; ?>"
+    <br>
+    Operator:  <input type="text" name="operator" value="">
     <br>
     (Please limit to  500 characters):<textarea name="note" id="note" cols=70 rows=7 style="color: #FF0000; font-size: larger;"></textarea>
     <br>
@@ -80,19 +88,20 @@ function clean($string) {
    return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
 }
 
-if (isset($_POST['submit2'])){
+if ((isset($_POST['submit2'])) && ($_POST['operator'] != "")){
     $note = htmlspecialchars($_POST['note']);
-
-        $note=clean($note);
+    $operator = htmlspecialchars($_POST['operator']);
+    $note=clean($note);
+    $operator=clean($operator);
     if(isset($_POST['Scrapped'])){
 
         $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
-        `scrapped`, `note`) VALUES('$barcode', '$line_number','$station_type',0,1,'$$note')";
+        `scrapped`,`operator`, `note`) VALUES('$barcode', '$line_number','$station_type',0,1,'$operator','$note')";
     }
     else {
 
         $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
-        `scrapped`, `note`) VALUES('$barcode', '$line_number','$station_type',0,0,'$note')";
+        `scrapped`,`operator`, `note`) VALUES('$barcode', '$line_number','$station_type',0,0,'$operator','$note')";
     }   
 
     mysql_select_db($db_name);
