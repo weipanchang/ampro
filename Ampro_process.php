@@ -73,9 +73,17 @@ if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and 
 <br>
 
 <?php
+
+function clean($string) {
+   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+   return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
+}
+
 if (isset($_POST['submit2'])){
     $note = htmlspecialchars($_POST['note']);
 
+        $note=clean($note);
     if(isset($_POST['Scrapped'])){
 
         $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,

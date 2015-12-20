@@ -63,6 +63,7 @@ echo "<br>";
 echo $comment;
 echo "<br>";
 
+
 require_once("connMysql.php");
 
 $con=mysql_connect($db_host,$db_username,$db_password);

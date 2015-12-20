@@ -24,7 +24,11 @@ Welcome back <?= $fgmembersite->UserFullName(); ?>!
 
 <li><p><a href='All_PCB_check.php'>Monitoring Recent PCB Activity</a></p></li>
 
-<!--<li><a href='Airetalk_adjust.php' style="color:blue"> AireTalk Credit Adjust Page <span style="color:red">(Controller Access Only)</span></a></li>-->
+<li><a href='PCB_Through_AOI_Day.php' style="color:blue"> PCB Through AOI on Day Shift</a></li>
+
+<li><a href='PCB_Through_AOI_Night.php' style="color:blue"> PCB Through AOI on Night Shift</a></li>
+
+
 <br><br><br>
 <p><a href='logout.php'>Logout</a></p>
 </div>

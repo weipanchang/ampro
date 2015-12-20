@@ -11,26 +11,61 @@ if(!$fgmembersite->CheckLogin())
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />  
-      <title>Recent PCB Activity Check</title>
+      <title>PCB Through AOI On Day Shift</title>
       <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css">
 </head>
 <body>
 <div id='fg_membersite_content'>
-<h2 style="color:blue; text-decoration: underline ">Monitoring All PCB</h2>
+<h2 style="color:blue; text-decoration: underline ">PCB Throgh AOI Day Shift</h2>
 <p style="color:red">
 Warning: This page is only to allow Ampro Management to access.<br> 
 </p>
 <p style="color:blue">
-Check Recent PCB Activity
+PCB Throgh AOI Day Shift
 </p>
 
+
+<form method="post" action="PCB_Through_AOI_Day.php">
+
+<table>
+<?php
+  $timezone = "America/Los_Angeles";
+  date_default_timezone_set($timezone);
+  $today = date("Y-m-d 00:00:00");
+?>
+
+<tr>
+
+<td style="color:blue" >Date (YYYY-MM-DD)<span style ="font-style:italic;font-size:70%;color:green"> Search with PCB on AOI with Date (Day Shift)</span></td>
+<!--<td style="color:blue" ><span style ="font-style:italic;font-size:70%;color:black">Search with member crateion date</span> End Date YYYY-MM-DD</td>-->
+<td><input type="text" name="Query_Day" size="10" value="<?php echo 'yyyy-mm-dd'; ?>"></td>
+</tr>
+
+<tr>
+<td ><input type="submit" value="Submit" style="background-color:#0000ff; color:#fff;" ></td>
+</tr>
+</table>
+
+</form>
 
 <?php  
 
 require_once("connMysql.php");
 
 
-    echo "<h2> PCB Activity Check  : </h2>";
+if (!isset($_POST['Query_Day']))
+    {
+    $Query_Day = null;
+    }
+else
+    {
+    $Query_Day = $_POST['Query_Day'];
+    }
+
+if (($_POST) && ( strlen($Query_Day) > 9) && ($Query_Day !='yyyy-mm-dd')) {
+    //echo $Query_Day;
+
+    echo "<h2> PCB Through AOI on Day Shift  : </h2>";
     echo "<table width='1000' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
     echo "<tr style='font-weight: bold;'>";  
     echo "<td width='30' align='center'>Rec Number</td><td width='30' align='center'>PCB Number</td><td width='8' align='center'>Assembler Line</td><td width='20' align='center'>Station</td><td width='10%' align='center'>status</td>  ";  
@@ -38,16 +73,9 @@ require_once("connMysql.php");
     
     $DBConnect=mysql_connect("$db_host", "$db_username", "$db_password") or die(mysql_error());
     mysql_select_db("$db_name") or die(mysql_error());
-    //$phonenum1 = preg_replace("/[^0-9]/", '', $phonenum1);
-    
-    //$number=$phonenum1;
-    //$num = rtrim($number);
-    //$num1 = ltrim($num);
-    
-    //$num1 = "+".$num1;
-    $success = false;
-	
-    $result = mysql_query("SELECT * FROM $db_tablename order by time desc limit 50");  
+
+    $result = mysql_query("SELECT * FROM `$db_tablename` where DATE(time) = '$Query_Day' and TIME(time) >= '07:00:00' and TIME(time) <= '15:30:01' and station= 'AOI' and status= 0 and note <> 'New PCB Record Created !' order by PCB ASC, time DESC");
+
     while($row=mysql_fetch_array($result))  
     {
     if ($row['status'] == 1) {
@@ -72,7 +100,7 @@ require_once("connMysql.php");
     echo "<td align='center' width='10%'>" . $checkin . "</td>";  
     echo "<td align='center' width='10%'>" . $scrapped . "</td>";  
     echo "<td align='center' width='200'>" . $row['note'] . "</td>";  
-    echo "<td align='center' width='20%'>" . $row['time'] . "</td>";  
+    echo "<td aliyyyy-mm-ddgn='center' width='20%'>" . $row['time'] . "</td>";  
     echo "</tr>"; 
     $success = true; 
 
@@ -80,8 +108,9 @@ require_once("connMysql.php");
     echo "</table>";  
 
     echo "   ";
+    mysql_close($DBConnect);
+}
 
-  mysql_close($DBConnect);
 
 
 

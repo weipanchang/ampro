@@ -11,7 +11,6 @@ $result = mysql_query($test_query);
 $tblCnt = 0;
 while($tbl = mysql_fetch_array($result)) {
   $tblCnt++;
-  #echo $tbl[0]."<br />\n";
 }
 if (!$tblCnt) {
   echo "There are no tables<br />\n";
@@ -29,11 +28,8 @@ if (!$tblCnt) {
 </style>
 </head>
 <body>
-
+<h3 style="text-align:center; color:blue; text-decoration: underline" >Ampro PCB Station Configuration</h3>
 <?php
-// define variables and set to empty values
-$nameErr = $emailErr = $genderErr = $websiteErr = "";
-$name = $email = $gender = $comment = $website = "";
 
 
 if (empty($_POST["station"])) {
@@ -47,13 +43,6 @@ if (empty($_POST["line"])) {
 } else {
   $line = test_input($_POST["line"]);
 }
-
-   //if (empty($_POST["gender"])) {
-   //  $genderErr = "Gender is required";
-   //} else {
-   //  $gender = test_input($_POST["gender"]);
-   //}
-
 
 function test_input($data) {
    $data = trim($data);
@@ -86,10 +75,13 @@ function test_input($data) {
     <option value="3">3</option>
     <option value="4">4</option>
     <option value="5">5</option>
-    
 
 </select>
-<input type="submit" name="Submit" id="stationsubmit" value="Submit" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<input type="submit" name="Submit" style="color: #FF0000; font-size: larger;" id="stationsubmit" value="Submit" />
 </form>
 <?php
 
@@ -99,7 +91,6 @@ if ($station <> ''){
     $fp  = 'Ampro_station_info.php';
     $str='<?php'."\n".'$station_type='.'\''.$station.'\''.';'."\n".'$line_number='.$line.';'."\n".'?>'."\n";
     file_put_contents($fp, $str);
-
 } 
 ?>
 
