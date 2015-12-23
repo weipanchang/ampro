@@ -38,7 +38,7 @@ PCB Throgh AOI Day Shift
 
 <td style="color:blue" >Date (YYYY-MM-DD)<span style ="font-style:italic;font-size:70%;color:green"> Search with PCB on AOI with Date (Day Shift)</span></td>
 <!--<td style="color:blue" ><span style ="font-style:italic;font-size:70%;color:black">Search with member crateion date</span> End Date YYYY-MM-DD</td>-->
-<td><input type="text" name="Query_Day" size="10" value="<?php echo 'yyyy-mm-dd'; ?>"></td>
+<td><input type="text" name="Query_Day" size="10" value="<?php echo 'YYYY-MM-DD'; ?>"></td>
 </tr>
 
 <tr>
@@ -62,7 +62,7 @@ else
     $Query_Day = $_POST['Query_Day'];
     }
 
-if (($_POST) && ( strlen($Query_Day) > 9) && ($Query_Day !='yyyy-mm-dd')) {
+if (($_POST) && ( strlen($Query_Day) > 9) && ($Query_Day !='YYYY-MM-DD')) {
     //echo $Query_Day;
 
     echo "<h2> PCB Through AOI on Day Shift  : </h2>";
