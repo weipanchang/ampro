@@ -86,11 +86,30 @@
       $model=$_POST['model'];
       echo "<h3>Your Name:  $operator </h3>";
       echo "<h3>Model:  $model </h3>";
+?>
+   <form method="post" action="Ampro_php_form3.php" >
+   <input type="hidden" name="name"
+     value="<?php echo  $operator; ?>">
+   <input type="hidden" name="model"
+     value="<?php echo  $model; ?>">
+   <input type="submit" name="submit3" style="color: #FF0000; font-size: larger;" value="Login">
+   </form>
+<?php   
    }
    elseif (isset($_POST['submit3'])) {
       $operator=$_POST['name'];
       echo "<h3>Your Name:  $operator </h3>";
+?>   
+   <form method="post" action="Ampro_php_form3.php" >
+      <input type="hidden" name="name"
+        value="<?php echo  $operator; ?>">
+      <input type="hidden" name="model"
+        value="<?php echo  $model; ?>">
+      <input type="submit" name="submit3" style="color: #FF0000; font-size: larger;" value="Login">
+   </form>
+<?php
    }
    echo "<br>";
+   mysql_close($con);
 ?>
 

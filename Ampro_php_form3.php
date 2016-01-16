@@ -9,12 +9,19 @@
 
 <?php
 // define variables and set to empty values
+include("Ampro_station_info.php");
+require_once("connMysql.php");
 $barcode = "";
 $comment = "";
 $barcodeerror = "";
 $commenterror = "";
 $error=0;
-
+$operator = $_POST['name'];
+if ($station_type=='AOI') {
+   $model = $_POST['model'];
+}
+//echo $operator;
+//echo $model;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if (empty($_POST["barcode"])) {
      $barcodeerror = "Barcode is required";
@@ -42,16 +49,25 @@ function test_input($data) {
    return $data;
 }
 
-include("Ampro_station_info.php");
+
 ?>
 
 <h1 style="text-align:center; color:blue; text-decoration: underline";>Ampro System PCB Check in/out</h1>
 <h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
+<h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Name: "; echo $operator;?></php?></h3>
 <form method = "post" action="">
-<p><span class="error">* Please Scan the Barcode *</span></p>
-   Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">
-<!--   Barcode:  <input type="text" name="barcode" value="">-->
-   <span class="error"> <?php echo $barcodeerror;?></span>
+   <p><span class="error">* Please Scan the Barcode *</span></p>
+      Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">
+      <input type="hidden" name="name" value="<?php echo $operator;?>">
+      <?php
+         if ($station_type =="AOI") {
+      ?>
+            <input type="hidden" name="model" value="<?php echo $model;?>">
+      <?php
+         }
+      ?>
+   <!--   Barcode:  <input type="text" name="barcode" value="">-->
+      <span class="error"> <?php echo $barcodeerror;?></span>
    <br><br>
    <br><br>
 </form>
@@ -64,7 +80,7 @@ echo $comment;
 echo "<br>";
 
 
-require_once("connMysql.php");
+
 
 $con=mysql_connect($db_host,$db_username,$db_password);
 mysql_select_db($db_name);
@@ -78,8 +94,8 @@ if (($barcode != "") and ($error == 0)) {
 
 if ( $rowcount == 0) {
    if (($station_type =="AOI") and ($error == 0) and ($barcode != "")) {
-      $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`line`, `station`, `status`,
-      `scrapped`) VALUES('$barcode', '$line_number','$station_type',0,0)";
+      $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `model`,`line`, `station`, `status`,
+      `scrapped`, `operator`) VALUES('$barcode','$model','$line_number','$station_type',0,0,'operator')";
       mysql_select_db($db_name);
       $result=mysql_query($sql, $con);
          if(! $result ) {
