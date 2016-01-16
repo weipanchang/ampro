@@ -1,4 +1,4 @@
 <?php
 $station_type='Testing';
-$line_number=3;
+$line_number=2;
 ?>

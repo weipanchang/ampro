@@ -112,11 +112,11 @@ else {
    mysql_close($con);
    if ($error==0) {
 ?>
-   <form method="post" action="Ampro_process.php" >
-      <input type="hidden" name="barcode"
-        value="<?php echo $_POST['barcode']; ?>">
-      <input type="submit" name="submit" style="color: #FF0000; font-size: larger;" value="Check In">
-   </form>
+<form method="post" action="Ampro_process.php" >
+   <input type="hidden" name="barcode"
+     value="<?php echo $_POST['barcode']; ?>">
+   <input type="submit" name="submit" style="color: #FF0000; font-size: larger;" value="Check In">
+</form>
 <?php
    }
 }
