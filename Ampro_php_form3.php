@@ -51,16 +51,16 @@ function test_input($data) {
 ?>
 <h1 style="text-align:center; color:blue; text-decoration: underline";>Ampro System PCB Check in/out</h1>
 <h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
-<h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Name: "; echo $operator;?></php?></h3>
+<h4 style="text-align:center; color:blue;";> <?php echo "Name: "; echo $operator;?></php?></h4>
 <?php
    if ($station_type =="AOI") {
 ?>
-   <h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Model: "; echo $model;?></php?></h3>
+   <h4 style="text-align:center; color:blue;";> <?php echo "Model: "; echo $model;?></php?></h4>
 <?php
    }
 ?>
 <form method="post" action="Ampro_php_starup.php" >
-   <h5 style="text-align:right; color:red; text-decoration: underline";>Change Name or Change Model click Logout &nbsp;|&nbsp;</h5>
+   <h5 style="text-align:right; color:red; text-decoration: underline";>Change Name or Change Model, Please Click Logout &nbsp; &nbsp;</h5>
    <div style="text-align:right">  
       <input type="submit" name="submit" style="text-align:center;color: #FF0000; font-size: medium;" value="Logout    ">
    </div> 
@@ -88,9 +88,6 @@ echo $barcode;
 echo "<br>";
 echo $comment;
 echo "<br>";
-
-
-
 
 $con=mysql_connect($db_host,$db_username,$db_password);
 mysql_select_db($db_name);
@@ -141,6 +138,15 @@ else {
 <form method="post" action="Ampro_process.php" >
    <input type="hidden" name="barcode"
      value="<?php echo $_POST['barcode']; ?>">
+   <input type="hidden" name="name"
+        value="<?php echo  $operator; ?>">
+   <?php
+         if ($station_type =="AOI") {
+   ?>
+            <input type="hidden" name="model" value="<?php echo $model;?>">
+   <?php
+         }
+   ?>
    <input type="submit" name="submit" style="color: #FF0000; font-size: larger;" value="Check In">
 </form>
 <?php
