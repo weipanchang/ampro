@@ -77,7 +77,7 @@
    ?>
    <br><br>
    <br><br>
-   <input type="submit" name="submit3" style="color: #FF0000; font-size: larger;" value="Confirm Select">
+   <input type="submit" name="submit3" style="color: #FF0000; font-size: larger;" value="Confirm Your Select">
 </form>
    <br><br>
 <?php

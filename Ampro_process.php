@@ -51,15 +51,15 @@
     </h5>
 <?php
 
-    $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `top`, `bottom`,`line`, `station`, `status`,
-      `scrapped`, `note`) VALUES('$barcode', '$top', 'bottom','$line_number','$station_type',1,0, 'Checked in')";
+    $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `model`, `top`, `bottom`,`line`, `station`, `status`,
+      `scrapped`, `operator`, `note`) VALUES('$barcode', '$model', '$top', '$bottom','$line_number','$station_type',1,0,'$operator', 'Checked in')";
     $result=mysql_query($sql, $con);
-    if (!isset($_POST['operator'])) {
-        $operator = null;
-    }
-    else {
-        $operator = $_POST['operator'];
-    }
+    //if (!isset($_POST['operator'])) {
+    //    $operator = null;
+    //}
+    //else {
+    //    $operator = $_POST['operator'];
+    //}
 } 
 ?>
 

@@ -48,13 +48,23 @@ function test_input($data) {
    $data = htmlspecialchars($data);
    return $data;
 }
-
-
 ?>
-
 <h1 style="text-align:center; color:blue; text-decoration: underline";>Ampro System PCB Check in/out</h1>
 <h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
 <h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Name: "; echo $operator;?></php?></h3>
+<?php
+   if ($station_type =="AOI") {
+?>
+   <h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Model: "; echo $model;?></php?></h3>
+<?php
+   }
+?>
+<form method="post" action="Ampro_php_starup.php" >
+   <h5 style="text-align:right; color:red; text-decoration: underline";>Change Name or Change Model click Logout &nbsp;|&nbsp;</h5>
+   <div style="text-align:right">  
+      <input type="submit" name="submit" style="text-align:center;color: #FF0000; font-size: medium;" value="Logout    ">
+   </div> 
+</form>
 <form method = "post" action="">
    <p><span class="error">* Please Scan the Barcode *</span></p>
       Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">
@@ -95,7 +105,7 @@ if (($barcode != "") and ($error == 0)) {
 if ( $rowcount == 0) {
    if (($station_type =="AOI") and ($error == 0) and ($barcode != "")) {
       $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `model`,`line`, `station`, `status`,
-      `scrapped`, `operator`) VALUES('$barcode','$model','$line_number','$station_type',0,0,'operator')";
+      `scrapped`, `operator`) VALUES('$barcode','$model','$line_number','$station_type',0,0,'$operator')";
       mysql_select_db($db_name);
       $result=mysql_query($sql, $con);
          if(! $result ) {
