@@ -41,6 +41,10 @@
     $row=mysql_fetch_array($result);
     $top = $row['top'];
     $bottom = $row['bottom'];
+    if ($station_type !=="AOI") {
+        $model = $row['model'];
+    }
+    
 ?>
     <h4 style="text-align:center; color:blue;";> <?php echo "Model: "; echo $row['model'];?></php?></h4>
 <?php
@@ -75,28 +79,29 @@
 } 
 ?>
 
-<form name="myform" action="" method="POST">
+<form name="myform" action="Ampro_php_form3.php" method="POST">
     <div align="center"><br>
     <?php
         if ($top == 1){
     ?>
-            <input type="checkbox" name="option1" value=$top checked> Top
+            <input type="checkbox" name="top" value=$top checked> Top
     <?php
         }
         else {
     ?>
-            <input type="checkbox" name="option1" value=$top > Top
+            <input type="checkbox" name="top" value=$top > Top
     <?php
         }
         if ($bottom == 1){
-    ?>      <input type="checkbox" name="option1" value=$bottom checked> Bottom
+    ?>      <input type="checkbox" name="bottom" value=$bottom checked> Bottom
     <?php
         }
         else {
     ?>
-            <input type="checkbox" name=$ value=$bottom > Bottom   
+            <input type="checkbox" name="bottom" value=$bottom > Bottom   
     <?php
         }
+
     ?>
     <br>
     <br>
@@ -114,9 +119,12 @@
     <input type="checkbox" name="Scrapped" value="Scrapped"> Scrapped this PCB <br>
     <br>
     <br>
-    <input type="submit" name="submit2" style="color: #FF0000; font-size: larger;" value="Check Out">
+    <input type="hidden" name="barcode" value="<?php echo  $barcode;?>">
     <input type="hidden" name="name" value="<?php echo  $operator;?>">
     <input type="hidden" name="model" value="<?php echo $model;?>">
+    
+    <input type="submit" name="submit2" style="color: #FF0000; font-size: larger;" value="Check Out">
+
 </form>
 <br>
 <!--Note (Please limit to  500 characters): <textarea name="comment" rows="5" cols="80" form="usrform"></textarea>-->
@@ -124,36 +132,36 @@
 <br>
 <br>
 
-<?php
-    function clean($string) {
-       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-    
-       return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
-    }
-    
-    if (isset($_POST['submit2'])) {
-        $note = htmlspecialchars($_POST['note']);
-        $note=clean($note);
-
-
-        if(isset($_POST['Scrapped'])){
-    
-            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`line`, `station`, `status`,
-            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$line_number','$station_type',0,1,'$operator','$note')";
-        }
-        else {
-    
-            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`line`, `station`, `status`,
-            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$line_number','$station_type',0,0,'$operator','$note')";
-        }   
-    
-        mysql_select_db($db_name);
-        mysql_query($sql) or die ('error: ' . mysql_error());
-    
-       header("location:Ampro_php_form3.php"); 
-    
-    }
-?>
+//<?php
+//    function clean($string) {
+//       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+//    
+//       return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
+//    }
+//    
+//    if (isset($_POST['submit2'])) {
+//        $note = htmlspecialchars($_POST['note']);
+//        $note=clean($note);
+//
+//
+//        if(isset($_POST['Scrapped'])){
+//    
+//            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`line`, `station`, `status`,
+//            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$line_number','$station_type',0,1,'$operator','$note')";
+//        }
+//        else {
+//    
+//            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`line`, `station`, `status`,
+//            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$line_number','$station_type',0,0,'$operator','$note')";
+//        }   
+//    
+//        mysql_select_db($db_name);
+//        mysql_query($sql) or die ('error: ' . mysql_error());
+//    
+//       //header("location:Ampro_php_form3.php"); 
+//    
+//    }
+//?>
 
 </body>
 </html>

@@ -8,9 +8,65 @@
 <body>
 
 <?php
-// define variables and set to empty values
 include("Ampro_station_info.php");
 require_once("connMysql.php");
+    function clean($string) {
+       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+    
+       return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
+    }
+
+    if (isset($_POST['submit2'])) {
+        $barcode=$_POST['barcode'];
+        $operator=$_POST['name'];
+        $model=$_POST['model'];
+        $top=$_POST['top'];
+        $bottom=$_POST['bottom'];
+        //$scrapped=$_POST['Scrapped'];
+        $note = htmlspecialchars($_POST['note']);
+        $note=clean($note);
+        
+      if(isset($_POST['top'])){
+         $top = 1;
+      }
+      else {
+         $top = 0;
+      }
+      
+      if(isset($_POST['bottom'])){
+         $bottom = 1;
+      }
+      else {
+         $bottom = 0;
+      }
+
+        if(isset($_POST['Scrapped'])){
+    
+            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`top`,`bottom`,`line`, `station`, `status`,
+            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$top','$bottom','$line_number','$station_type',0,1,'$operator','$note')";
+        }
+        else {
+    
+            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`top`,`bottom`,`line`, `station`, `status`,
+            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$top','$bottom','$line_number','$station_type',0,0,'$operator','$note')";
+        }   
+        $con=mysql_connect($db_host,$db_username,$db_password);
+              
+        mysql_select_db($db_name);
+        $result=mysql_query($sql, $con);
+        //mysql_query($sql) or die ('error: ' . mysql_error());
+        //$barcode="";
+    
+       //header("location:Ampro_php_form3.php"); 
+    
+    }
+?>
+
+<?php
+// define variables and set to empty values
+//include("Ampro_station_info.php");
+//require_once("connMysql.php");
+
 $barcode = "";
 $comment = "";
 $barcodeerror = "";
@@ -20,6 +76,7 @@ $operator = $_POST['name'];
 if ($station_type=='AOI') {
    $model = $_POST['model'];
 }
+
 //echo $operator;
 //echo $model;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -59,6 +116,7 @@ function test_input($data) {
 <?php
    }
 ?>
+}
 <form method="post" action="Ampro_php_starup.php" >
    <h5 style="text-align:right; color:red; text-decoration: underline";>Change Name or Change Model, Please Click Logout &nbsp; &nbsp;</h5>
    <div style="text-align:right">  
@@ -67,7 +125,18 @@ function test_input($data) {
 </form>
 <form method = "post" action="">
    <p><span class="error">* Please Scan the Barcode *</span></p>
+   <?php
+      if (isset($_POST['submit2'])) {
+   ?>
+         Barcode:  <input type="text" name="barcode" value="<?php echo "";?>">
+   <?php
+      }
+      else {
+   ?>   
       Barcode:  <input type="text" name="barcode" value="<?php echo $barcode;?>">
+   <?php
+   }
+   ?>
       <input type="hidden" name="name" value="<?php echo $operator;?>">
       <?php
          if ($station_type =="AOI") {
@@ -83,10 +152,14 @@ function test_input($data) {
 </form>
 
 <?php
+if (isset($_POST['submit2'])) {
+   $barcode = "";
+}
 echo "<h3>Your Input:</h3>";
+
 echo $barcode;
 echo "<br>";
-echo $comment;
+//echo $comment;
 echo "<br>";
 
 $con=mysql_connect($db_host,$db_username,$db_password);
@@ -120,6 +193,15 @@ if ( $rowcount == 0) {
       <form method="post" action="Ampro_process.php" >
          <input type="hidden" name="barcode"
            value="<?php echo $_POST['barcode']; ?>">
+         <input type="hidden" name="name"
+            value="<?php echo  $operator; ?>">
+<?php
+         if ($station_type =="AOI") {
+?>
+            <input type="hidden" name="model" value="<?php echo $model;?>">
+<?php
+         }
+?>
          <input type="submit" name="submit" value="Check In">
       </form>
 <?php
