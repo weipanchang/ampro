@@ -14,16 +14,32 @@
        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
        return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
     }
+    
+    function IsChecked($chkname,$value)
+    {
+        if(!empty($_POST[$chkname]))
+        {
+            foreach($_POST[$chkname] as $chkval)
+            {
+                if($chkval == $value)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     if (isset($_POST['submit2'])) {
         $barcode=$_POST['barcode'];
         $operator=$_POST['name'];
         $model=$_POST['model'];
-        $top=$_POST['top'];
-        $bottom=$_POST['bottom'];
+        //$top=$_POST['top'];
+        //$bottom=$_POST['bottom'];
         //$scrapped=$_POST['Scrapped'];
         $note = htmlspecialchars($_POST['note']);
         $note=clean($note);
+        //$numberofissue=$_POST['numberofissue'];
         
       if(isset($_POST['top'])){
          $top = 1;
@@ -32,13 +48,28 @@
          $top = 0;
       }
       
-      if(isset($_POST['bottom'])){
+      if(isset($_POST['bottom'])) {
          $bottom = 1;
       }
       else {
          $bottom = 0;
       }
+      
+      //$con=mysql_connect($db_host,$db_username,$db_password);
+      //mysql_select_db($db_name);
+      //$sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
+      //$result=mysql_query($sql, $con);
+      //
+      $checked_count = count($_POST['Issue']);
+      if ($note != "") {
+         $note = $note . "\n";
+      }
+      $note = $note . "This PCB hs the following ".$checked_count. " issue(s): \n";
+      foreach($_POST['Issue'] as $selected) {
+         $note = $note . $selected . "...\n";
+      }
 
+      
       if(isset($_POST['Scrapped'])){
   
           $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`top`,`bottom`,`line`, `station`, `status`,
@@ -114,7 +145,7 @@ function test_input($data) {
 <?php
    }
 ?>
-}
+
 <form method="post" action="Ampro_php_starup.php" >
    <h5 style="text-align:right; color:red; text-decoration: underline";>Change Name or Change Model, Please Click Logout &nbsp; &nbsp;</h5>
    <div style="text-align:right">  

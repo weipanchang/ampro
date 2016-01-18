@@ -76,6 +76,7 @@
     //else {
     //    $operator = $_POST['operator'];
     //}
+    mysql_close($con);
 } 
 ?>
 
@@ -107,7 +108,26 @@
     <br>
     <br>
     </div>
-    <input type="checkbox" name="Issue Code 1" value=$test > <?php echo $test ?>
+    
+    <?php
+    
+      if (($station_type=='AOI') or ($station_type=='Testing') or ($station_type=='QA')) {
+         $con=mysql_connect($db_host,$db_username,$db_password);
+         mysql_select_db($db_name);
+         $sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
+         $result=mysql_query($sql, $con);
+         //$n = 0;
+         while ($row= mysql_fetch_array($result)) {
+            //$n = $n + 1;
+            $issue = $row['Issue'];
+    ?>
+            <input type="checkbox" name="Issue[]" value="<?php echo $issue; ?>" > <?php echo $issue; ?> <br><br>
+    <?php
+         }
+       }
+    ?>
+    
+
     <br>
     <br>
     <br>
