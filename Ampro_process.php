@@ -101,7 +101,6 @@
             <input type="checkbox" name="bottom" value=$bottom > Bottom   
     <?php
         }
-
     ?>
     <br>
     <br>

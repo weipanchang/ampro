@@ -8,11 +8,10 @@
 <body>
 
 <?php
-include("Ampro_station_info.php");
-require_once("connMysql.php");
+   include("Ampro_station_info.php");
+   require_once("connMysql.php");
     function clean($string) {
        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-    
        return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
     }
 
@@ -40,25 +39,24 @@ require_once("connMysql.php");
          $bottom = 0;
       }
 
-        if(isset($_POST['Scrapped'])){
-    
-            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`top`,`bottom`,`line`, `station`, `status`,
-            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$top','$bottom','$line_number','$station_type',0,1,'$operator','$note')";
-        }
-        else {
-    
-            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`top`,`bottom`,`line`, `station`, `status`,
-            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$top','$bottom','$line_number','$station_type',0,0,'$operator','$note')";
-        }   
-        $con=mysql_connect($db_host,$db_username,$db_password);
-              
-        mysql_select_db($db_name);
-        $result=mysql_query($sql, $con);
+      if(isset($_POST['Scrapped'])){
+  
+          $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`top`,`bottom`,`line`, `station`, `status`,
+          `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$top','$bottom','$line_number','$station_type',0,1,'$operator','$note')";
+      }
+      else {
+  
+          $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`top`,`bottom`,`line`, `station`, `status`,
+          `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$top','$bottom','$line_number','$station_type',0,0,'$operator','$note')";
+      }   
+      $con=mysql_connect($db_host,$db_username,$db_password);
+            
+      mysql_select_db($db_name);
+      $result=mysql_query($sql, $con);
         //mysql_query($sql) or die ('error: ' . mysql_error());
         //$barcode="";
     
        //header("location:Ampro_php_form3.php"); 
-    
     }
 ?>
 
