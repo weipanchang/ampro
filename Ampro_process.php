@@ -44,7 +44,6 @@
     if ($station_type !=="AOI") {
         $model = $row['model'];
     }
-    
 ?>
     <h4 style="text-align:center; color:blue;";> <?php echo "Model: "; echo $row['model'];?></php?></h4>
 <?php
@@ -61,7 +60,8 @@
     echo " ";
     echo $row['line'];
     echo "<br>";
-    echo $row['note'];
+    echo "<br>";
+    echo "<font color='red'>".$row['note']."</font>";
     echo "<br>";
     ?>
     </h5>
@@ -70,12 +70,6 @@
     $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `model`, `top`, `bottom`,`line`, `station`, `status`,
       `scrapped`, `operator`, `note`) VALUES('$barcode', '$model', '$top', '$bottom','$line_number','$station_type',1,0,'$operator', 'Checked in')";
     $result=mysql_query($sql, $con);
-    //if (!isset($_POST['operator'])) {
-    //    $operator = null;
-    //}
-    //else {
-    //    $operator = $_POST['operator'];
-    //}
     mysql_close($con);
 } 
 ?>
@@ -118,7 +112,6 @@
          $result=mysql_query($sql, $con);
          //$n = 0;
          while ($row= mysql_fetch_array($result)) {
-            //$n = $n + 1;
             $issue = $row['Issue'];
     ?>
             <input type="checkbox" name="Issue[]" value="<?php echo $issue; ?>" > <?php echo $issue; ?> <br><br>
@@ -151,36 +144,7 @@
 <br>
 <br>
 
-//<?php
-//    function clean($string) {
-//       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-//    
-//       return preg_replace('/[^A-Za-z0-9#!*&?!@%\-]/', '', $string); // Removes special chars.
-//    }
-//    
-//    if (isset($_POST['submit2'])) {
-//        $note = htmlspecialchars($_POST['note']);
-//        $note=clean($note);
-//
-//
-//        if(isset($_POST['Scrapped'])){
-//    
-//            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`line`, `station`, `status`,
-//            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$line_number','$station_type',0,1,'$operator','$note')";
-//        }
-//        else {
-//    
-//            $sql = "INSERT INTO `PCB_Tracking`(`PCB`,`model`,`line`, `station`, `status`,
-//            `scrapped`,`operator`, `note`) VALUES('$barcode','$model','$line_number','$station_type',0,0,'$operator','$note')";
-//        }   
-//    
-//        mysql_select_db($db_name);
-//        mysql_query($sql) or die ('error: ' . mysql_error());
-//    
-//       //header("location:Ampro_php_form3.php"); 
-//    
-//    }
-//?>
+
 
 </body>
 </html>

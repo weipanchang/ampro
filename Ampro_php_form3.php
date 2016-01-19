@@ -34,12 +34,9 @@
         $barcode=$_POST['barcode'];
         $operator=$_POST['name'];
         $model=$_POST['model'];
-        //$top=$_POST['top'];
-        //$bottom=$_POST['bottom'];
-        //$scrapped=$_POST['Scrapped'];
         $note = htmlspecialchars($_POST['note']);
         $note=clean($note);
-        //$numberofissue=$_POST['numberofissue'];
+
         
       if(isset($_POST['top'])){
          $top = 1;
@@ -54,21 +51,17 @@
       else {
          $bottom = 0;
       }
-      
-      //$con=mysql_connect($db_host,$db_username,$db_password);
-      //mysql_select_db($db_name);
-      //$sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
-      //$result=mysql_query($sql, $con);
-      //
-      $checked_count = count($_POST['Issue']);
-      if ($note != "") {
-         $note = $note . "\n";
-      }
-      $note = $note . "This PCB hs the following ".$checked_count. " issue(s): \n";
-      foreach($_POST['Issue'] as $selected) {
-         $note = $note . $selected . "...\n";
-      }
 
+      if (!empty($_POST['Issue'])) {
+         $checked_count = count($_POST['Issue']);
+         if ($note != "") {
+            $note = $note . "<br>";
+         }
+         $note = $note . "This PCB has the following ".$checked_count. " issue(s): "."<br>";
+         foreach($_POST['Issue'] as $selected) {
+            $note = $note . $selected . ".<br>";
+         }
+      }   
       
       if(isset($_POST['Scrapped'])){
   
@@ -84,18 +77,12 @@
             
       mysql_select_db($db_name);
       $result=mysql_query($sql, $con);
-        //mysql_query($sql) or die ('error: ' . mysql_error());
-        //$barcode="";
-    
-       //header("location:Ampro_php_form3.php"); 
+      //mysql_query($sql) or die ('error: ' . mysql_error());
+      //header("location:Ampro_php_form3.php"); 
     }
 ?>
 
 <?php
-// define variables and set to empty values
-//include("Ampro_station_info.php");
-//require_once("connMysql.php");
-
 $barcode = "";
 $comment = "";
 $barcodeerror = "";
@@ -105,7 +92,6 @@ $operator = $_POST['name'];
 if ($station_type=='AOI') {
    $model = $_POST['model'];
 }
-
 //echo $operator;
 //echo $model;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
