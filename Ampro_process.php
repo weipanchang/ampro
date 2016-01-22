@@ -50,7 +50,7 @@
     echo "You currently are processing PCB - ";
     echo $barcode;
     echo "<br>";
-    $test="test123";
+    //$test="test123";
     if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
 ?>
     <h5>

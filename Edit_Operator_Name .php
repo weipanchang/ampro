@@ -1,4 +1,4 @@
-<?PHP
+<?php
 require_once("./include/membersite_config.php");
 
 if(!$fgmembersite->CheckLogin())
@@ -12,7 +12,7 @@ if(!$fgmembersite->CheckLogin())
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <head>
       <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
-      <title>Home page</title>
+      <title>Manage Operator Page</title>
       <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css">
 </head>
 <body>
@@ -20,18 +20,13 @@ if(!$fgmembersite->CheckLogin())
 <h2>Home Page</h2>
 Welcome back <?= $fgmembersite->UserFullName(); ?>!
 
-<li><p><a href='change-pwd.php'>Change password</a></p></li>
-
-<li><a href='idx_check.php' style="color:blue"> Monitoring Recent PCB Activity</a></li>
-<li><a href='PCB_Through_AOI_Day.php' style="color:blue"> PCB Through AOI on Day Shift</a></li>
-<li><a href='PCB_Through_AOI_Night.php' style="color:blue"> PCB Through AOI on Night Shift</a></li>
-<li><a href='All_PCB_check.php' style="color:blue">Edit Operator Name List</a></li>
-<li><a href='All_PCB_check.php' style="color:blue">Edit Station Issue List</a></li>
-<li><a href='All_PCB_check.php' style="color:blue">Edit Station PCB Model List</a></li>
+<li><a href='list_operator.php' style="color:blue"> List All Operator</a></li>
+<li><a href='delete_operator.php' style="color:blue"> Delete Operator</a></li>
+<li><a href='add_operator.php' style="color:blue"> Add New Operator</a></li>
 
 
 <br><br><br>
 <p><a href='logout.php'>Logout</a></p>
 </div>
 </body>
-</html>
+?>
