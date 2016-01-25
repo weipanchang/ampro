@@ -20,7 +20,6 @@
         $model = $_POST['model'];
     }
     
-    //$issueinfo = $_POST['issueinfo'];
     include("Ampro_station_info.php");
     require_once("connMysql.php");
 ?>
@@ -55,17 +54,17 @@
     echo $barcode;
     echo "<br>";
     echo "Message History: ";
-
+    echo "<br>";
     if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
 ?>
     <h5>
 <?php
-//    echo "<br>";
+    echo "<br>";
     echo $row['station'];
     echo " ";
     echo $row['line'];
     echo "<br>";
-//    echo "<br>";
+    echo "<br>";
     echo "<font color='red'>".$row['note']."</font>";
     echo "<br>";
 ?>
@@ -85,46 +84,37 @@
   }
 ?>
 
-<form name="issueform" action="Ampro_process.php" method="POST">
+<form name="issueform" action="<?php echo $PHP_SELF; ?>" method="POST">
     <div align="left"><br>
 
 <?php
-
-    //while ($row= mysql_fetch_array($result)) {
+    echo "find ";
+    while ($row= mysql_fetch_array($result)) {
     echo "<select name='issue'>";
         while ($row= mysql_fetch_array($result) ) {
             echo "<option value='" . $row['Issue'] ."'>" . $row['Issue'] ."</option>";
         }
     echo "</select>";
-    echo " On ";
-    //
+    echo " on ";
+    }
 ?>
     <select name="topbottom">
         <option value="top">Top</option>
         <option value="bottom">Bottom</option>
     </select>
     
-    Area:  <input type="text" name="location" value="<?php echo "";?>">
+    In:  <input type="text" name="location" value="<?php echo "";?>">
     
     <input type="hidden" name="barcode" value="<?php echo  $barcode;?>">
     <input type="hidden" name="name" value="<?php echo  $operator;?>">
     <input type="hidden" name="model" value="<?php echo $model;?>">
-    <input type="hidden" name="issueinfo" value="<?php echo $issueinfo;?>">
+    
     <input type="submit" name="submit6" style="color: #FF0000; font-size: larger;" value="Add this issue">
     </div>
-
 </form>
 
-<?php
-    if (isset($_POST['submit6'])) {
-        $issueinfo = $_POST['issue']. " on " .$_POST['topbottom']. " in ".  $_POST['location'];
-        $sql = "INSERT INTO `PCB_Issue_Tracking`(`PCB`, `Issue_log`, `station`, `line`) VALUES('$barcode','$issueinfo','station','$line_number')";
-        $result=mysql_query($sql, $con);      
-      //$issueinfo = $issueinfo.$issueinfo_current;
-        echo "Added the issue:---- " . $issueinfo;
-    }
-?>
-<form name="myform" action="Ampro_php_form3.php" method="POST">
+
+<form name="myform" action="" method="POST">
     <div align="center"><br>
     <?php
         if ($top == 1){
@@ -171,6 +161,15 @@
 <br>
 <br>
 
+<?php
+    if (isset($_POST['submit6'])) {
+      $issueinfo = $_Post['issue']. $_Post['topbottom']. $_Post['location'];
+      echo $issueinfo;
+    }
+
+    
+    
+?>
 
 </body>
 </html>

@@ -29,4 +29,10 @@ require_once("connMysql.php");
     $DBConnect=mysql_connect("$db_host", "$db_username", "$db_password") or die(mysql_error());
     mysql_select_db("$db_name") or die(mysql_error());
     $result = mysql_query("SELECT * FROM `PCB_Operator` order by name");
+     echo "<tr style='font-weight: bold;'>"; 
+    echo "<tr>";  
+    echo "<td align='center' width='30'>" . $row['recnumber'] . "</td>";  
+    echo "<td align='center' width='30'>" . $row['name'] . "</td>";  
+    echo "</tr>"; 
+    
 ?>
