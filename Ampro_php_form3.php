@@ -221,7 +221,7 @@ if ( $rowcount == 0) {
       </form>
 <?php
    }
-   elseif (($error==0) and ($rowcount == 0) and ($barcode != "")) {
+   elseif (($error==0) and ($rowcount == 0) and ($barcode != "") and ($station_type !="AOI")) {
       echo "<br>";
       echo "Barcode is not in database. Please send this PCB to AOI Station";
       echo "<br>";

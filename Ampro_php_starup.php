@@ -66,7 +66,7 @@
       if ($station_type=='AOI') {
          //$con=mysql_connect($db_host,$db_username,$db_password);
          //mysql_select_db($db_name);
-         $sql = "SELECT * FROM `PCB_Model` order by time DESC";
+         $sql = "SELECT * FROM `PCB_Model` order by model";
          $result=mysql_query($sql);
          echo "<select name='model'>";
          while ($row= mysql_fetch_array($result) ) {

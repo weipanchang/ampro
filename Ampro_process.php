@@ -44,9 +44,11 @@
     $bottom = $row['bottom'];
     if ($station_type !=="AOI") {
         $model = $row['model'];
-    $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `model`, `top`, `bottom`,`line`, `station`, `status`,
-      `scrapped`, `operator`, `note`) VALUES('$barcode', '$model', '$top', '$bottom','$line_number','$station_type',1,0,'$operator', 'Checked in')";
-    $result=mysql_query($sql, $con);
+    }
+    if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
+        $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `model`, `top`, `bottom`,`line`, `station`, `status`,
+          `scrapped`, `operator`, `note`) VALUES('$barcode', '$model', '$top', '$bottom','$line_number','$station_type',1,0,'$operator', 'Checked in')";
+        $result=mysql_query($sql, $con);
     }
 ?>
     <h4 style="text-align:center; color:blue;";> <?php echo "Model: "; echo $row['model'];?></php?></h4>
@@ -56,11 +58,11 @@
     echo "<br>";
     echo "Message History: ";
 
-    if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
+//    if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
 ?>
     <h5>
 <?php
-//    echo "<br>";
+
     echo $row['station'];
     echo " ";
     echo $row['line'];
@@ -72,8 +74,33 @@
     </h5>
     
 <?php
+    echo "Issue Log: ";
+    echo "<br>";
+    echo "<table width='1000' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
+    echo "<tr style='font-weight: bold;'>";  
+    echo "<td width='5%' align='center'>Rec</td><td width='15%' align='center'>PCB Number</td><td width='5%' align='center'>Line</td><td width='10%' align='center'>Station</td><td width='38%' align='center'>Issue</td>  ";  
+    echo "<td width='5%' align='center'>Fixed</td><td width='25%' align='center'>Time</td></tr>";
+    $sql = "SELECT * FROM `PCB_Issue_Tracking` WHERE `fixed` = 0 and `PCB` = '$barcode' order by create_time DESC limit 10";
+    $result=mysql_query($sql, $con);
+    while($row=mysql_fetch_array($result))  {
+        
+        echo "<tr style='font-weight: bold;'>"; 
+        echo "<tr>";  
+        echo "<td align='center' width='5%'>" . $row['recnumber'] . "</td>";  
+        echo "<td align='center' width='15%'>" . $row['PCB'] . "</td>";
+        echo "<td align='center' width='5%'>" . $row['line'] . "</td>";
+        echo "<td align='center' width='10%'>" . $row['station'] . "</td>";
+        echo "<td align='left' width='38%'>" . $row['Issue_log'] . "</td>";  
+        echo "<td align='center' width='5%'>" . "No" . "</td>";  
+        echo "<td align='center' width='25%'>" . $row['create_time'] . "</td>"; 
+    echo "</tr>";
+    }
+    echo "</table>";  
+    echo "   ";
     mysql_close($con);
-} 
+
+
+
 ?>
 
 <?php
@@ -82,15 +109,15 @@
      mysql_select_db($db_name);
      $sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
      $result=mysql_query($sql, $con);
-  }
+  
 ?>
 
 <form name="issueform" action="Ampro_process.php" method="POST">
+    <p>
+    <h4 style="text-align:left; color:red;">Enter New Issue Here! .....</h4>
+    </p>
     <div align="left"><br>
-
 <?php
-
-    //while ($row= mysql_fetch_array($result)) {
     echo "<select name='issue'>";
         while ($row= mysql_fetch_array($result) ) {
             echo "<option value='" . $row['Issue'] ."'>" . $row['Issue'] ."</option>";
@@ -118,11 +145,19 @@
 <?php
     if (isset($_POST['submit6'])) {
         $issueinfo = $_POST['issue']. " on " .$_POST['topbottom']. " in ".  $_POST['location'];
-        $sql = "INSERT INTO `PCB_Issue_Tracking`(`PCB`, `Issue_log`, `station`, `line`) VALUES('$barcode','$issueinfo','station','$line_number')";
-        $result=mysql_query($sql, $con);      
-      //$issueinfo = $issueinfo.$issueinfo_current;
-        echo "Added the issue:---- " . $issueinfo;
+        
+        if (!($issueinfo === ' on top in ')) {
+            if ((substr($issueinfo, 0, 11)) == ' on top in '){
+                $issueinfo = substr($issueinfo, 11);
+            }
+            
+            $sql = "INSERT INTO `PCB_Issue_Tracking`(`PCB`, `Issue_log`, `station`, `line`, `operator`) VALUES('$barcode','$issueinfo','$station_type','$line_number', '$operator')";
+            $result=mysql_query($sql, $con);      
+            echo "New issue Added:---- " . $issueinfo;
+        }
     }
+    mysql_close($con);
+  }
 ?>
 <form name="myform" action="Ampro_php_form3.php" method="POST">
     <div align="center"><br>
