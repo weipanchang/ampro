@@ -104,6 +104,41 @@
 ?>
 
 <?php
+  if ($station_type=='Repair') {
+     $con=mysql_connect($db_host,$db_username,$db_password);
+     mysql_select_db($db_name);
+     $sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
+     $result=mysql_query($sql, $con);
+  
+?>
+
+<form name="repairform" action="Ampro_process.php" method="POST">
+    <p>
+    <h4 style="text-align:left; color:red;">Please Input The Issue Rec Number You Fixed, Click at "Update this issue", and Refresh the Screen! (F5 key).....</h4>
+    </p>
+    Issue Rec Number:  <input type="text" name="update" value="<?php echo "";?>">
+    <input type="hidden" name="barcode" value="<?php echo  $barcode;?>">
+    <input type="hidden" name="name" value="<?php echo  $operator;?>">
+    <input type="hidden" name="model" value="<?php echo $model;?>">
+    <input type="hidden" name="issueinfo" value="<?php echo $issueinfo;?>">
+    <input type="submit" name="submit7" style="color: #FF0000; font-size: larger;" value="Update this issue">
+
+</form>
+
+<?php
+    if (isset($_POST['submit7'])) {
+        $rec_number = $_POST['update'];
+        $sql = "UPDATE `PCB_Issue_Tracking` SET `fixed`=1,`R_Person`='$operator' WHERE `recnumber` = '$rec_number'";
+        $result=mysql_query($sql, $con);      
+//        echo "New issue Added:---- " . $issueinfo;
+        }
+    
+    mysql_close($con);
+  }
+?>
+
+
+<?php
   if (($station_type=='AOI') or ($station_type=='Testing') or ($station_type=='QA')) {
      $con=mysql_connect($db_host,$db_username,$db_password);
      mysql_select_db($db_name);
@@ -159,6 +194,11 @@
     mysql_close($con);
   }
 ?>
+
+
+
+
+
 <form name="myform" action="Ampro_php_form3.php" method="POST">
     <div align="center"><br>
     <?php
