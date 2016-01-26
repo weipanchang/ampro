@@ -32,7 +32,8 @@
     //echo "You currently are processing PCB - ";
     //echo $barcode;
     //echo "<br>";
-?></php?></h4>
+?></php?>
+</h4>
 
 <?php
     $con=mysql_connect($db_host,$db_username,$db_password);
@@ -57,7 +58,6 @@
     echo $barcode;
     echo "<br>";
     echo "Message History: ";
-
 //    if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
 ?>
     <h5>
@@ -67,7 +67,6 @@
     echo " ";
     echo $row['line'];
     echo "<br>";
-//    echo "<br>";
     echo "<font color='red'>".$row['note']."</font>";
     echo "<br>";
 ?>
@@ -83,7 +82,6 @@
     $sql = "SELECT * FROM `PCB_Issue_Tracking` WHERE `fixed` = 0 and `PCB` = '$barcode' order by create_time DESC limit 10";
     $result=mysql_query($sql, $con);
     while($row=mysql_fetch_array($result))  {
-        
         echo "<tr style='font-weight: bold;'>"; 
         echo "<tr>";  
         echo "<td align='center' width='5%'>" . $row['recnumber'] . "</td>";  
@@ -98,9 +96,6 @@
     echo "</table>";  
     echo "   ";
     mysql_close($con);
-
-
-
 ?>
 
 <?php
@@ -109,7 +104,6 @@
      mysql_select_db($db_name);
      $sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
      $result=mysql_query($sql, $con);
-  
 ?>
 
 <form name="repairform" action="Ampro_process.php" method="POST">
@@ -122,7 +116,6 @@
     <input type="hidden" name="model" value="<?php echo $model;?>">
     <input type="hidden" name="issueinfo" value="<?php echo $issueinfo;?>">
     <input type="submit" name="submit7" style="color: #FF0000; font-size: larger;" value="Update this issue">
-
 </form>
 
 <?php
@@ -130,13 +123,10 @@
         $rec_number = $_POST['update'];
         $sql = "UPDATE `PCB_Issue_Tracking` SET `fixed`=1,`R_Person`='$operator' WHERE `recnumber` = '$rec_number'";
         $result=mysql_query($sql, $con);      
-//        echo "New issue Added:---- " . $issueinfo;
         }
-    
     mysql_close($con);
   }
 ?>
-
 
 <?php
   if (($station_type=='AOI') or ($station_type=='Testing') or ($station_type=='QA')) {
@@ -144,7 +134,6 @@
      mysql_select_db($db_name);
      $sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
      $result=mysql_query($sql, $con);
-  
 ?>
 
 <form name="issueform" action="Ampro_process.php" method="POST">
@@ -159,7 +148,6 @@
         }
     echo "</select>";
     echo " On ";
-    //
 ?>
     <select name="topbottom">
         <option value="top">Top</option>
@@ -174,13 +162,11 @@
     <input type="hidden" name="issueinfo" value="<?php echo $issueinfo;?>">
     <input type="submit" name="submit6" style="color: #FF0000; font-size: larger;" value="Add this issue">
     </div>
-
 </form>
 
 <?php
     if (isset($_POST['submit6'])) {
         $issueinfo = $_POST['issue']. " on " .$_POST['topbottom']. " in ".  $_POST['location'];
-        
         if (!($issueinfo === ' on top in ')) {
             if ((substr($issueinfo, 0, 11)) == ' on top in '){
                 $issueinfo = substr($issueinfo, 11);
@@ -196,10 +182,7 @@
 ?>
 
 
-
-
-
-<form name="myform" action="Ampro_php_form3.php" method="POST">
+<form name="testform" action="Ampro_php_form3.php" method="POST">
     <div align="center"><br>
     <?php
         if ($top == 1){
@@ -222,7 +205,6 @@
     <?php
         }
     ?>
-
     <br>
     </div>
     <br>
@@ -238,15 +220,12 @@
     <input type="hidden" name="model" value="<?php echo $model;?>">
     
     <input type="submit" name="submit2" style="color: #FF0000; font-size: larger;" value="Check Out">
-
 </form>
 <br>
 <!--Note (Please limit to  500 characters): <textarea name="comment" rows="5" cols="80" form="usrform"></textarea>-->
 <br>
 <br>
 <br>
-
-
 </body>
 </html>
 
