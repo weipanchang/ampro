@@ -73,6 +73,8 @@
     </h5>
     
 <?php
+    $rec_array = array();
+//    $rec_array=[];
     echo "Issue Log: ";
     echo "<br>";
     echo "<table width='1000' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
@@ -82,6 +84,7 @@
     $sql = "SELECT * FROM `PCB_Issue_Tracking` WHERE `fixed` = 0 and `PCB` = '$barcode' order by create_time DESC limit 10";
     $result=mysql_query($sql, $con);
     while($row=mysql_fetch_array($result))  {
+        array_push($rec_array, $row['recnumber']);
         echo "<tr style='font-weight: bold;'>"; 
         echo "<tr>";  
         echo "<td align='center' width='5%'>" . $row['recnumber'] . "</td>";  
@@ -121,9 +124,15 @@
 <?php
     if (isset($_POST['submit7'])) {
         $rec_number = $_POST['update'];
-        $sql = "UPDATE `PCB_Issue_Tracking` SET `fixed`=1,`R_Person`='$operator' WHERE `recnumber` = '$rec_number'";
-        $result=mysql_query($sql, $con);      
+        if (in_array( $rec_number, $rec_array)) {
+            $sql = "UPDATE `PCB_Issue_Tracking` SET `fixed`=1,`R_Person`='$operator' WHERE `recnumber` = '$rec_number'";
+            $result=mysql_query($sql, $con);
+            echo "Issue ". $rec_number ." is marked as fixed.";
         }
+        else {
+            echo "No Issue is marked as fixed";
+        }
+    }
     mysql_close($con);
   }
 ?>
@@ -138,7 +147,7 @@
 
 <form name="issueform" action="Ampro_process.php" method="POST">
     <p>
-    <h4 style="text-align:left; color:red;">Enter New Issue Here! .....</h4>
+    <h4 style="text-align:left; color:red;">Enter New Issue Here, Click at Add This Issue! (F5 to Refresh the Screen).....</h4>
     </p>
     <div align="left"><br>
 <?php
@@ -173,7 +182,8 @@
             }
             
             $sql = "INSERT INTO `PCB_Issue_Tracking`(`PCB`, `Issue_log`, `station`, `line`, `operator`) VALUES('$barcode','$issueinfo','$station_type','$line_number', '$operator')";
-            $result=mysql_query($sql, $con);      
+            $result=mysql_query($sql, $con);
+ 
             echo "New issue Added:---- " . $issueinfo;
         }
     }
@@ -185,6 +195,7 @@
 <form name="testform" action="Ampro_php_form3.php" method="POST">
     <div align="center"><br>
     <?php
+ 
         if ($top == 1){
     ?>
             <input type="checkbox" name="top" value=$top checked> Top is done!
