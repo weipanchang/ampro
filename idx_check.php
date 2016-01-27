@@ -355,6 +355,7 @@ Logged in as: <?= $fgmembersite->UserFullName() ?>
 <p>
 <a href='login-home.php'>Menu Page</a>
 </p>
+
 </div>
 </body>
 </html>

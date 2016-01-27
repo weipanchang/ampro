@@ -49,7 +49,7 @@ else
 
     require_once("connMysql.php");
     //$con=mysql_connect($db_host,$db_username,$db_password);
-    $con=mysql_connect($db_host,'root','abc123');
+    $con=mysql_connect($db_host,$db_username,$db_password);
     mysql_select_db($db_name);
     echo "<h2> PCB Issue Log  : </h2>";
     echo "<br>";

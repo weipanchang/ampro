@@ -233,7 +233,6 @@
     <input type="submit" name="submit2" style="color: #FF0000; font-size: larger;" value="Check Out">
 </form>
 <br>
-<!--Note (Please limit to  500 characters): <textarea name="comment" rows="5" cols="80" form="usrform"></textarea>-->
 <br>
 <br>
 <br>
