@@ -17,7 +17,7 @@ if(!$fgmembersite->CheckLogin())
 </head>
 <body>
 <div id='fg_membersite_content'>
-<h2>Ampro Issue management main page</h2>
+<h2>Ampro Issue Management Main Page</h2>
 Welcome back <?= $fgmembersite->UserFullName(); ?>!
 
 

@@ -17,12 +17,12 @@ if(!$fgmembersite->CheckLogin())
 </head>
 <body>
 <div id='fg_membersite_content'>
-<h2 style="color:blue; text-decoration: underline ">Check Individual PCB Issue</h2>
+<h2 style="color:blue; text-decoration: underline ">List Individual PCB Issue log</h2>
 <p style="color:red">
 Warning: This page is only to allow Ampro Management to access.<br> 
 </p>
 <p style="color:blue">
-Check Individual PCB Issue Log
+List Individual PCB Issue Log
 </p>
 
 <form method="post" action="PCB_Issue_Log.php">
@@ -56,7 +56,7 @@ else
     echo "<table width='1300' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
     echo "<tr style='font-weight: bold;'>";  
     echo "<td width=3%' align='center'>Rec</td><td width='5%' align='center'>PCB Number</td><td width='1%' align='center'>Line</td><td width='4%' align='center'>Station</td><td width='25%' align='center'>Issue</td>  ";  
-    echo "<td width='3%' align='center'>Fixed</td><td width='8%' align='center'>Test Time</td><td width='8%' align='center'>Update Time</td></tr>";
+    echo "<td width='3%' align='center'>Fixed</td><td width='8%' align='center'>Found At</td><td width='8%' align='center'>Fixed At</td></tr>";
     $sql = "SELECT * FROM `PCB_Issue_Tracking` WHERE `PCB` = '$barcode' order by create_time DESC";
     $result=mysql_query($sql, $con);
     while($row=mysql_fetch_array($result))  {

@@ -163,7 +163,7 @@
         <option value="bottom">Bottom</option>
     </select>
     
-    Area:  <input type="text" name="location" value="<?php echo "";?>">
+    Location:  <input type="text" name="location" value="<?php echo "";?>">
     
     <input type="hidden" name="barcode" value="<?php echo  $barcode;?>">
     <input type="hidden" name="name" value="<?php echo  $operator;?>">
@@ -193,6 +193,10 @@
 
 
 <form name="testform" action="Ampro_php_form3.php" method="POST">
+    <br>
+    <br>
+    <br>
+    <br>
     <div align="center"><br>
     <?php
  

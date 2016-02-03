@@ -12,18 +12,17 @@ if(!$fgmembersite->CheckLogin())
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <head>
       <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
-      <title>Ampro Operator management main page</title>
+      <title>Ampro model Management Main Page</title>
       <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css">
 </head>
 <body>
 <div id='fg_membersite_content'>
-<h2>Ampro Operator Management Main Page</h2>
+<h2>Ampro Model Management Main Page</h2>
 Welcome back <?= $fgmembersite->UserFullName(); ?>!
 
-
-<li><a href='list_operator.php' style="color:blue">List All Operator</a></li>
-<li><a href='add_operator.php' style="color:blue">Add New Operator</a></li>
-<li><a href='delete_operator.php' style="color:blue">Delete A Operator</a></li>
+<li><a href='list_model.php' style="color:blue">List All Model</a></li>
+<li><a href='add_model.php' style="color:blue">Add New Model</a></li>
+<li><a href='delete_model.php' style="color:blue">Delete A Model</a></li>
 
 
 <br><br><br>

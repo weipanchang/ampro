@@ -1,4 +1,4 @@
 <?php
-$station_type='Label';
-$line_number=2;
+$station_type='Shipping';
+$line_number=1;
 ?>
