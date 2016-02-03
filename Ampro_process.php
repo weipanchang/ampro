@@ -24,23 +24,22 @@
     include("Ampro_station_info.php");
     require_once("connMysql.php");
 ?>
-<h1 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Ampro System PCB Check in/out"; ?></php></h1>
-<h3 style="text-align:center; color:blue; text-decoration: underline";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h3>
-<h4 style="text-align:center; color:blue;";> <?php echo "Name: "; echo $operator;?></php?></h4>
+<h4 style="text-align:center; color:blue; text-decoration: underline";> <?php echo "Ampro System PCB Check in/out"; ?></php></h4>
+<h5 style="text-align:center; color:blue; text-decoration: underline";> <?php echo $station_type; echo " Station    "; echo $line_number; ?></php?></h5><h5 style="text-align:center; color:blue;";> <?php echo "Name: "; echo $operator;?></php?></h5>
 <h4>
 <?php
     //echo "You currently are processing PCB - ";
     //echo $barcode;
     //echo "<br>";
-?></php?>
+?>
 </h4>
 
 <?php
     $con=mysql_connect($db_host,$db_username,$db_password);
     mysql_select_db($db_name);
-    $sql = "SELECT * FROM `PCB_Tracking` WHERE `PCB`='$barcode' order by time DESC limit 1";
-    $result=mysql_query($sql);
-    $row=mysql_fetch_array($result);
+    $sql = "SELECT * FROM `PCB_Tracking` WHERE `PCB`='$barcode' order by time DESC limit 15";
+    $result_1=mysql_query($sql);
+    $row=mysql_fetch_array($result_1);
     $top = $row['top'];
     $bottom = $row['bottom'];
     if ($station_type !=="AOI") {
@@ -48,29 +47,39 @@
     }
     if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
         $sql = "INSERT INTO `PCB_Tracking`(`PCB`, `model`, `top`, `bottom`,`line`, `station`, `status`,
-          `scrapped`, `operator`, `note`) VALUES('$barcode', '$model', '$top', '$bottom','$line_number','$station_type',1,0,'$operator', 'Checked in')";
+        `scrapped`, `operator`, `note`) VALUES('$barcode', '$model', '$top', '$bottom','$line_number','$station_type',1,0,'$operator', 'Checked in')";
         $result=mysql_query($sql, $con);
     }
 ?>
-    <h4 style="text-align:center; color:blue;";> <?php echo "Model: "; echo $row['model'];?></php?></h4>
+
+<h5 style="text-align:center; color:blue;";> <?php echo "Model: " . $row['model'];?></php?></h5>
+
 <?php
     echo "You currently are processing PCB - ";
     echo $barcode;
     echo "<br>";
+    echo "<br>";
     echo "Message History: ";
-//    if (!(($row['line'] == $line_number) and ($row['station'] == $station_type) and ($row['status'] == 1))) {
 ?>
-    <h5>
-<?php
+<h5 style="text-align:left; color:red;">Please Use F5 key to show all message history.....</h5>
 
-    echo $row['station'];
-    echo " ";
-    echo $row['line'];
-    echo "<br>";
-    echo "<font color='red'>".$row['note']."</font>";
-    echo "<br>";
+
+<?php
+    while($row=mysql_fetch_array($result_1)) {
 ?>
-    </h5>
+<h5>
+<?php
+        if (($row['note'] != "Checked in") and ($row['note'] != "")) {
+            echo $row['station'];
+            echo " ";
+            echo $row['line']. ": ";
+            //echo "<br>";
+            echo "<font color='blue'>".$row['note']."</font>";
+            echo "<br>";
+        }
+    }
+?>
+</h5>
     
 <?php
     $rec_array = array();
@@ -111,8 +120,10 @@
 
 <form name="repairform" action="Ampro_process.php" method="POST">
     <p>
-    <h4 style="text-align:left; color:red;">Please Input The Issue Rec Number You Fixed, Click at "Update this issue", and Refresh the Screen! (F5 key).....</h4>
+    <h5 style="text-align:left; color:red;">Please Input The Issue Rec Number You Fixed, Click at "Update this issue", and Refresh the Screen! (F5 key).....</h5>
     </p>
+    <br>
+    Comment: <textarea cols=70 rows=3 name="r_comment"  style="color:#CD2200" value=""></textarea>
     Issue Rec Number:  <input type="text" name="update" value="<?php echo "";?>">
     <input type="hidden" name="barcode" value="<?php echo  $barcode;?>">
     <input type="hidden" name="name" value="<?php echo  $operator;?>">
@@ -124,8 +135,9 @@
 <?php
     if (isset($_POST['submit7'])) {
         $rec_number = $_POST['update'];
+        $r_comment = $_POST['r_comment'];
         if (in_array( $rec_number, $rec_array)) {
-            $sql = "UPDATE `PCB_Issue_Tracking` SET `fixed`=1,`R_Person`='$operator' WHERE `recnumber` = '$rec_number'";
+            $sql = "UPDATE `PCB_Issue_Tracking` SET `fixed`=1,`R_Person`='$operator', `r_comment` = '$r_comment' WHERE `recnumber` = '$rec_number'";
             $result=mysql_query($sql, $con);
             echo "Issue ". $rec_number ." is marked as fixed.";
         }
@@ -147,9 +159,9 @@
 
 <form name="issueform" action="Ampro_process.php" method="POST">
     <p>
-    <h4 style="text-align:left; color:red;">Enter New Issue Here, Click at Add This Issue! (F5 to Refresh the Screen).....</h4>
+    <h5 style="text-align:left; color:red;">Enter New Issue Here, Then click at Add This Issue! (F5 to Refresh the Screen).....</h5>
     </p>
-    <div align="left"><br>
+    <div align="left">
 <?php
     echo "<select name='issue'>";
         while ($row= mysql_fetch_array($result) ) {
@@ -162,15 +174,20 @@
         <option value="top">Top</option>
         <option value="bottom">Bottom</option>
     </select>
-    
-    Location:  <input type="text" name="location" value="<?php echo "";?>">
-    
+    <br>
+    <textarea cols=70 rows=3 name="location"  style="color:#CD2200" value="">Location: </textarea>
     <input type="hidden" name="barcode" value="<?php echo  $barcode;?>">
     <input type="hidden" name="name" value="<?php echo  $operator;?>">
     <input type="hidden" name="model" value="<?php echo $model;?>">
+    <?php
+    if (isset($_POST['issueinfo'])) {
+    ?>
     <input type="hidden" name="issueinfo" value="<?php echo $issueinfo;?>">
+    <?php
+    }
+    ?>
     <input type="submit" name="submit6" style="color: #FF0000; font-size: larger;" value="Add this issue">
-    </div>
+    </div>   
 </form>
 
 <?php

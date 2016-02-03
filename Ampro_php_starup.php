@@ -68,7 +68,7 @@
          //mysql_select_db($db_name);
          $sql = "SELECT * FROM `PCB_Model` order by model";
          $result=mysql_query($sql);
-         echo "<select name='model'>";
+         echo "<select name='model' size=10>";
          while ($row= mysql_fetch_array($result) ) {
             echo "<option value='" . $row['model'] ."'>" . $row['model'] ."</option>";
          }

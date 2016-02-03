@@ -43,7 +43,17 @@ Warning: This page is only to allow Ampro Management to access.<br>
 <tr>
 <td style="color:blue" >Enter The Issue and Station</td>
 <td><input type="text" name="issue" size="30" value="<?php echo $issue;?>"></td>
-<td><input type="text" name="station" size="30" value="<?php echo $station;?>"></td>
+<td><select name="station" >
+<option value=""><?php echo "Select Station Type"; ?></option>
+
+    <option value="AOI">AOI</option>
+    <option value="Testing">Testing</option>
+    <option value="QA">QA</option>
+    <option value="Repair">Repair</option>
+    <option value="Label">Label</option>
+    <option value="Shipping">Shipping</option>
+
+</select></td>
 </tr>
 <td ><input type="submit" name="submit" value="submit" style="background-color:#0000ff; color:#fff;" ></td>
 </table>

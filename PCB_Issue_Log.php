@@ -55,8 +55,8 @@ else
     echo "<br>";
     echo "<table width='1300' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
     echo "<tr style='font-weight: bold;'>";  
-    echo "<td width=3%' align='center'>Rec</td><td width='5%' align='center'>PCB Number</td><td width='1%' align='center'>Line</td><td width='4%' align='center'>Station</td><td width='25%' align='center'>Issue</td>  ";  
-    echo "<td width='3%' align='center'>Fixed</td><td width='8%' align='center'>Found At</td><td width='8%' align='center'>Fixed At</td></tr>";
+    echo "<td width=3%' align='center'>Rec</td><td width='5%' align='center'>PCB Number</td><td width='1%' align='center'>Line</td><td width='4%' align='center'>Station</td><td width='15%' align='center'>Issue</td>  ";  
+    echo "<td width='15%' align='center'>Comment</td><td width='3%' align='center'>Fixed</td><td width='8%' align='center'>Found At</td><td width='8%' align='center'>Fixed At</td></tr>";
     $sql = "SELECT * FROM `PCB_Issue_Tracking` WHERE `PCB` = '$barcode' order by create_time DESC";
     $result=mysql_query($sql, $con);
     while($row=mysql_fetch_array($result))  {
@@ -72,7 +72,8 @@ else
         echo "<td align='center' width='5%'>" . $row['PCB'] . "</td>";
         echo "<td align='center' width='1%'>" . $row['line'] . "</td>";
         echo "<td align='center' width='4%'>" . $row['station'] . "</td>";
-        echo "<td align='left' width='25%'>" . $row['Issue_log'] . "</td>";  
+        echo "<td align='left' width='15%'>" . $row['Issue_log'] . "</td>";
+        echo "<td align='left' width='15%'>" . $row['r_comment'] . "</td>";  
         echo "<td align='center' width='3%'>" . $fixed . "</td>";  
         echo "<td align='center' width='8%'>" . $row['create_time'] . "</td>";
         echo "<td align='center' width='8%'>" . $row['update_time'] . "</td>";
