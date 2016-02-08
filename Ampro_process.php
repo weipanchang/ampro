@@ -90,7 +90,7 @@
     echo "<tr style='font-weight: bold;'>";  
     echo "<td width='5%' align='center'>Rec</td><td width='15%' align='center'>PCB Number</td><td width='5%' align='center'>Line</td><td width='10%' align='center'>Station</td><td width='38%' align='center'>Issue</td>  ";  
     echo "<td width='5%' align='center'>Fixed</td><td width='25%' align='center'>Time</td></tr>";
-    $sql = "SELECT * FROM `PCB_Issue_Tracking` WHERE `fixed` = 0 and `PCB` = '$barcode' order by create_time DESC limit 10";
+    $sql = "SELECT * FROM `PCB_Issue_Tracking` WHERE `PCB` = '$barcode' order by create_time DESC";
     $result=mysql_query($sql, $con);
     while($row=mysql_fetch_array($result))  {
         array_push($rec_array, $row['recnumber']);
@@ -150,7 +150,7 @@
 ?>
 
 <?php
-  if (($station_type=='AOI') or ($station_type=='Testing') or ($station_type=='QA')) {
+  if (($station_type=='AOI') or ($station_type=='Testing') or ($station_type=='QA') or ($station_type=='Label') or ($station_type=='Shipping')) {
      $con=mysql_connect($db_host,$db_username,$db_password);
      mysql_select_db($db_name);
      $sql = "SELECT `Issue` FROM `PCB_Issue` WHERE `station` = '$station_type'  ";
@@ -198,10 +198,25 @@
                 $issueinfo = substr($issueinfo, 11);
             }
             
+            $sql="SELECT `Issue_log`, `create_time` FROM `PCB_Issue_Tracking` where `PCB` = '$barcode' order by `create_time` DESC";
+            $result = mysql_query($sql, $con);
+            $row= mysql_fetch_array($result); 
+            $dd = new DateTime();
+            //echo $dd->format('Y-m-d H:i:s');
+            //echo "<br>";
+            $dd= ($dd->modify("-20 minutes"));
+            //echo $dd->format('Y-m-d H:i:s');
+            //echo "<br>";
+            //echo $row['create_time'];
+            //echo "<br>";
+            //echo $row['Issue_log'];
+            //echo "<br>";
+            if (!($issueinfo == $row['Issue_log'] and $row['create_time'] <= $dd)) {
             $sql = "INSERT INTO `PCB_Issue_Tracking`(`PCB`, `Issue_log`, `station`, `line`, `operator`) VALUES('$barcode','$issueinfo','$station_type','$line_number', '$operator')";
             $result=mysql_query($sql, $con);
  
             echo "New issue Added:---- " . $issueinfo;
+            }
         }
     }
     mysql_close($con);

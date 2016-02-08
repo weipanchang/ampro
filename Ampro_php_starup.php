@@ -68,7 +68,7 @@
          //mysql_select_db($db_name);
          $sql = "SELECT * FROM `PCB_Model` order by model";
          $result=mysql_query($sql);
-         echo "<select name='model' size=10>";
+         echo "<select name='model' size=8>";
          while ($row= mysql_fetch_array($result) ) {
             echo "<option value='" . $row['model'] ."'>" . $row['model'] ."</option>";
          }
@@ -86,7 +86,7 @@
       $model=$_POST['model'];
       echo "<h3>Your Name:  $operator </h3>";
       echo "<h3>Model:  $model </h3>";
-?>
+?>CheckLogin
    <form method="post" action="Ampro_php_form3.php" >
    <input type="hidden" name="name"
      value="<?php echo  $operator; ?>">

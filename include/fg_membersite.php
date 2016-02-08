@@ -38,7 +38,7 @@ class FGMembersite
     //-----Initialization -------
     function FGMembersite()
     {
-        $this->sitename = 'pingshow.net';
+        $this->sitename = 'Ampro.com';
         $this->rand_key = '0iQx5oBk66oVZep';
     }
     

@@ -4,10 +4,10 @@ require_once("./include/fg_membersite.php");
 $fgmembersite = new FGMembersite();
 
 //Provide your site name here
-$fgmembersite->SetWebsiteName('pingshow.net');
+$fgmembersite->SetWebsiteName('Ampro.com');
 
 //Provide the email address where you want to get notifications
-$fgmembersite->SetAdminEmail('webmaster@pingshow.net');
+$fgmembersite->SetAdminEmail('webmaster@Ampro.com');
 
 //Provide your database login details here:
 //hostname, user name, password, database name and table name
