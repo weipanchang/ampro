@@ -3,7 +3,7 @@ require_once("./include/membersite_config.php");
 
 if(isset($_POST['submitted']))
 {
-   if($fgmembersite->Login())
+   if($fgmembersite->Login() and $_SESSION['permission'] == 4)
    {
         $fgmembersite->RedirectToURL("login-home.php");
    }

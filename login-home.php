@@ -31,7 +31,7 @@ Welcome back <?= $fgmembersite->UserFullName(); ?>!
 <li><a href='Ampro_model_menu.php' style="color:blue">Edit PCB Model List</a></li>
 
 <br><br><br>
-<p><a href='logout.php'>Logout</a></p>
+<p><a href='logout2.php'>Logout</a></p>
 </div>
 </body>
 </html>
