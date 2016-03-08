@@ -21,7 +21,7 @@ if(!$fgmembersite->CheckLogin())
 Welcome back <?= $fgmembersite->UserFullName(); ?>!
 
 <li><p><a href='change-pwd.php'>Change password</a></p></li>
-
+<HR WIDTH="100%" COLOR="#6699FF" SIZE="6">
 <li><a href='All_PCB_check.php' style="color:blue"> Monitoring Recent PCB Activity</a></li>
 <li><a href='PCB_Issue_Log.php' style="color:blue"> Display Individual PCB Issue List</a></li>
 <li><a href='PCB_Through_AOI_Day.php' style="color:blue"> PCB Through AOI on Day Shift</a></li>
@@ -29,7 +29,8 @@ Welcome back <?= $fgmembersite->UserFullName(); ?>!
 <li><a href='Ampro_operator_menu.php' style="color:blue">Edit Operator Name List</a></li>
 <li><a href='Ampro_issue_menu.php' style="color:blue">Edit Station Issue List</a></li>
 <li><a href='Ampro_model_menu.php' style="color:blue">Edit PCB Model List</a></li>
-
+<HR WIDTH="100%" COLOR="#6699FF" SIZE="6">
+<li><a href='Ampro_barcode_reassociate.php' style="color:blue">Change Barcode Associate and Modify Shipping Flag </a></li>
 <br><br><br>
 <p><a href='logout2.php'>Logout</a></p>
 </div>
