@@ -33,8 +33,12 @@ require_once("connMysql.php");
     echo "<h2> PCB Activity Check  : </h2>";
     echo "<table width='1000' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
     echo "<tr style='font-weight: bold;'>";  
-    echo "<td width='30' align='center'>Rec Number</td><td width='30' align='center'>PCB Number</td><td width='8' align='center'>Assembler Line</td><td width='20' align='center'>Station</td><td width='10%' align='center'>status</td>  ";  
-    echo "<td width='10%' align='center'>Scripped</td><td width='200' align='center'>note</td><td width='20%' align='center'>Time</td></tr>";  
+    echo "<td width='25' align='center'>Rec Number</td><td width='35' align='center'>PCB Number</td>";
+    echo "<td width='20%' align='center'>Model</td>";
+    echo "<td width='8' align='center'>Line</td><td width='20' align='center'>Station</td>";
+    echo "<td width='10%' align='center'>status</td>  ";  
+    echo "<td width='10%' align='center'>Scrappped</td><td width='10%' align='center'>note</td>";
+    echo "<td width='15%' align='center'>Time</td></tr>";  
     
     $DBConnect=mysql_connect("$db_host", "$db_username", "$db_password") or die(mysql_error());
     mysql_select_db("$db_name") or die(mysql_error());
@@ -65,14 +69,15 @@ require_once("connMysql.php");
     }
     echo "<tr style='font-weight: bold;'>"; 
     echo "<tr>";  
-    echo "<td align='center' width='30'>" . $row['recnumber'] . "</td>";  
-    echo "<td align='center' width='30'>" . $row['PCB'] . "</td>";  
-    echo "<td align='center' width='20'>" . $row['line'] . "</td>";  
+    echo "<td align='center' width='25'>" . $row['recnumber'] . "</td>";  
+    echo "<td align='center' width='35'>" . $row['PCB'] . "</td>";  
+    echo "<td align='center' width='20%'>" . $row['model'] . "</td>";
+    echo "<td align='center' width='20'>" . $row['line'] . "</td>"; 
     echo "<td align='center' width='8'>" . $row['station'] . "</td>";  
     echo "<td align='center' width='10%'>" . $checkin . "</td>";  
     echo "<td align='center' width='10%'>" . $scrapped . "</td>";  
-    echo "<td align='center' width='200'>" . $row['note'] . "</td>";  
-    echo "<td align='center' width='20%'>" . $row['time'] . "</td>";  
+    echo "<td align='center' width='10%'>" . $row['note'] . "</td>";  
+    echo "<td align='center' width='15%'>" . $row['time'] . "</td>";  
     echo "</tr>"; 
     $success = true; 
 
@@ -82,9 +87,6 @@ require_once("connMysql.php");
     echo "   ";
 
   mysql_close($DBConnect);
-
-
-
 ?> 
 
 <p>&nbsp;</p>
