@@ -12,12 +12,12 @@ if(!$fgmembersite->CheckLogin())
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <head>
       <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
-      <title>Ampro_barcode_associate With SMC barcode Page</title>
+      <title>Ampro Barcode Associate With SMC Aarcode Page</title>
       <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css">
 </head>
 <body>
 <div id='fg_membersite_content'>
-<h2>Ampro_barcode_associate With SMC barcode Page</h2>
+<h2>Ampro Barcode Associate With SMC Barcode Page</h2>
 Welcome back <?= $fgmembersite->UserFullName(); ?>!
 
 
