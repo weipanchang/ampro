@@ -138,15 +138,13 @@ else
 ?>
 
 <form method = "post" action="">
-<!--    <input type="hidden" name="Ampro_barcode" value="<?php echo $AMP_barcode;?>">
-    <input type="hidden" name="SMC_barcode" value="<?php echo $SMC_barcode;?>">-->
+
     <input type="hidden" name="recnumber" value="<?php echo $rec_number;?>
    <div style="text-align:center; font-size: large;"> 
         <ul>
         <p><pre>                AmPro System Barcode:              SuperMicro Barcode:                                 Shipped</pre></p>
         <p><pre> 
                    <?php echo $AMP_barcode;?>              <input type="text" style="text-align:center;color: #FF0000; font-size: large;" name="SMC_barcode" value="<?php echo $SMC_barcode;?>">                    <input type="checkbox" name="shipped" value="" checked>         <input type="submit" name="submit8" style="text-align:center;color: #FF0000; font-size: large;" value="Update">
-        <!--<input type="text" style="text-align:center;color: #FF0000; font-size: large;" name="Ampro_barcode" value="<?php echo $AMP_barcode;?>">                       <input type="text" style="text-align:center;color: #FF0000; font-size: large;" name="SMC_barcode" value="<?php echo $SMC_barcode;?>">                    <input type="checkbox" name="shipped" value="1" checked>         <input type="submit" name="submit8" style="text-align:center;color: #FF0000; font-size: large;" value="Update">-->
         </pre></p>
 
         </ul>
