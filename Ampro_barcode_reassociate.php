@@ -24,9 +24,9 @@ Welcome back <?= $fgmembersite->UserFullName(); ?>!
 <HR WIDTH="100%" COLOR="#6699FF" SIZE="6">
 <li><a href='Search_with_Ampro_Barcode.php' style="color:blue"> Search with Ampro Barcode </a></li>
 <li><a href='Search_with_SMC_Barcode.php' style="color:blue"> Search with SMC Barcode </a></li>
-<li><a href='Modify_Ampro_and_HMC_Barcode_Association.php' style="color:blue"> Modify Ampro and HMC Barcode Association</a></li>
+<!--<li><a href='Modify_Ampro_and_HMC_Barcode_Association.php' style="color:blue"> Modify Ampro and HMC Barcode Association</a></li>-->
 <HR WIDTH="100%" COLOR="#6699FF" SIZE="6">
-<li><a href='Ampro_change_shipping_flag.php' style="color:blue">Modify Shipping Flag </a></li>
+<!--<li><a href='Ampro_change_shipping_flag.php' style="color:blue">Modify Shipping Flag </a></li>-->
 <br><br><br>
 <p><a href='index.html'>Back</a></p>
 </div>

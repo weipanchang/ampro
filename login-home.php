@@ -1,4 +1,5 @@
 <?PHP
+
 require_once("./include/membersite_config.php");
 
 if(!$fgmembersite->CheckLogin())
@@ -6,6 +7,11 @@ if(!$fgmembersite->CheckLogin())
     $fgmembersite->RedirectToURL("login.php");
     exit;
 }
+
+?>
+<?php session_start();
+
+$_SESSION['username'] = "<?= $fgmembersite->UserFullName(); ?>";
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -27,7 +33,7 @@ Welcome back <?= $fgmembersite->UserFullName(); ?>!
 <li><a href='PCB_Shipping_Report.php' style="color:blue"> Display Shipping Report</a></li>
 <li><a href='PCB_Through_AOI_Day.php' style="color:blue"> PCB Through AOI on Day Shift</a></li>
 <li><a href='PCB_Through_AOI_Night.php' style="color:blue"> PCB Through AOI on Night Shift</a></li>
-<li><a href='Ampro_operator_menu.php' style="color:blue">Edit Operator Name List</a></li>
+<!--<li><a href='Ampro_operator_menu.php' style="color:blue">Edit Operator Name List</a></li>-->
 <li><a href='Ampro_issue_menu.php' style="color:blue">Edit Station Issue List</a></li>
 <li><a href='Ampro_model_menu.php' style="color:blue">Edit PCB Model List</a></li>
 <HR WIDTH="100%" COLOR="#6699FF" SIZE="6">

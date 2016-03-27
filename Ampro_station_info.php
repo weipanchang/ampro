@@ -1,4 +1,4 @@
 <?php
-$station_type='AOI';
+$station_type='Shipping';
 $line_number=1;
 ?>
