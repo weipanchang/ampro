@@ -1,5 +1,6 @@
 <?php
 require_once("./include/membersite_config.php");
+$operator = $fgmembersite->UserFullName();
 
 if(!$fgmembersite->CheckLogin())
 {
