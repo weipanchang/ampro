@@ -61,7 +61,7 @@ else
     $SMC_barcode = $_POST['SMC_barcode']; 
     }
 
-if (($_POST) && ( strlen($AMP_barcode) == 12 )) {
+if (($_POST) && ( strlen($AMP_barcode) != 0 )) {
     //$con=mysql_connect($db_host,$db_username,$db_password);
 
     echo "<h2> PCB Issue Log  : </h2>";
@@ -102,7 +102,7 @@ if (($_POST) && ( strlen($AMP_barcode) == 12 )) {
 
     echo "   ";
 }
-if (($_POST) && ( strlen($SMC_barcode) == 12 )) {
+if (($_POST) && ( strlen($SMC_barcode) != 0 )) {
     //$con=mysql_connect($db_host,$db_username,$db_password);
 
     echo "<h2> PCB Issue Log  : </h2>";
