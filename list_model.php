@@ -31,8 +31,8 @@ Warning: This page is only to allow Ampro Management to access.<br>
     require_once("connMysql.php");
     echo "<table width='600' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
     echo "<tr style='font-weight: bold;'>";  
-    echo "<td width='20%' align='center'>Rec Number</td><td width='50%' align='center'>Model Name</td></tr>";  
-    
+    echo "<td width='20%' align='center'>Rec Number</td><td width='50%' align='center'>Model Name</td>";  
+    echo "<td width='10%' align='center'>Revision</td></tr>";  
     $con=mysql_connect($db_host,$db_username,$db_password) or die(mysql_error());
     mysql_select_db("$db_name") or die(mysql_error());
     
@@ -43,7 +43,7 @@ Warning: This page is only to allow Ampro Management to access.<br>
     echo "<tr>";  
     echo "<td align='center' width='20%'>" . $row['recnumber'] . "</td>";  
     echo "<td align='left' width='50%'>" . $row['model'] . "</td>";
-
+    echo "<td align='left' width='10%'>" . $row['revision'] . "</td>";
     echo "</tr>";
     }
 ?>
@@ -54,8 +54,10 @@ Logged in as: <?= $fgmembersite->UserFullName() ?>
 <a href='Ampro_model_menu.php'>Back to Edit Model Name List Main Page</a>
 </p>
 <p>&nbsp;</p>
-<p style=" position: absolute; bottom: 0; left: 0; width: 100%; text-align: left;"><a href='Ampro_model_menu.php'>Back to Edit Model Name List Main Page</a></p>
+
 </div>
+
 </body>
+<!--<p style=" position: absolute; bottom: 0; left: 0; width: 100%; text-align: left;"><a href='Ampro_model_menu.php'>Back to Edit Model Name List Main Page</a></p>-->
 </html>
 

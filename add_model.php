@@ -6,12 +6,20 @@ if(!$fgmembersite->CheckLogin())
     $fgmembersite->RedirectToURL("login.php");
     exit;
 }
-
+$model='';
+$revision='';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $model =$_POST['model'];
 }
 else {
     $model = "";
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $revision =$_POST['revision'];
+}
+else {
+    $revision = "";
 }
 ?>
 
@@ -40,40 +48,48 @@ Warning: This page is only to allow Ampro Management to access.<br>
 <td style="color:blue" >Enter The Model Name</td>
 <td><input type="text" name="model" size="30" value="<?php echo $model;?>"></td>
 </tr>
+<tr>
+<td style="color:blue" >Enter The Revision</td>
+<td><input type="text" name="revision" size="10" value="<?php echo $revision;?>"></td>
+</tr>
 <td ><input type="submit" name="submit" value="submit" style="background-color:#0000ff; color:#fff;" ></td>
 </table>
 </form>
 
 <?php
     require_once("connMysql.php");
+    if (isset($_POST['submit'])  and ($_POST['model'] !="") and ($_POST['revision'] != "")) {
+    $model = $_POST['model'];
+    $revision = $_POST['revision'];
+    $con=mysql_connect($db_host,$db_username,$db_password) or die(mysql_error());
+    mysql_select_db("$db_name") or die(mysql_error());
+    
+    $sql = "INSERT INTO `PCB_Model` (`model`, `revision`) VALUES('$model','$revision')";
+    $result=mysql_query($sql, $con) or die(mysql_error());
+    
+    mysql_close($con);
+    //header('Location:Ampro_model_menu.php');
+    }
     echo "<table width='600' border='5'; style='border-collapse: collapse;border-color: silver;'>";  
     echo "<tr style='font-weight: bold;'>";  
-    echo "<td width='20%' align='center'>Rec Number</td><td width='50%' align='center'>Model Name</td></tr>";  
+    echo "<td width='20%' align='center'>Rec Number</td><td width='50%' align='center'>Model Name</td>";
+    echo "<td width='10%' align='center'>Revision</td></tr>";  
     
     $con=mysql_connect($db_host,$db_username,$db_password) or die(mysql_error());
     mysql_select_db("$db_name") or die(mysql_error());
     
-    $sql = "SELECT * FROM `PCB_Model` order by model";
+    $sql = "SELECT * FROM `PCB_Model` order by `time` DESC ";
     $result=mysql_query($sql, $con);
     while($row=mysql_fetch_array($result))  {
     echo "<tr style='font-weight: bold;'>"; 
     echo "<tr>";  
     echo "<td align='center' width='20%'>" . $row['recnumber'] . "</td>";  
     echo "<td align='left' width='50%'>" . $row['model'] . "</td>";
+    echo "<td align='left' width='10%'>" . $row['revision'] . "</td>";
 
     echo "</tr>";
     }
-    if (isset($_POST['submit'])) {
-        $model = $_POST['model'];
-        $con=mysql_connect($db_host,$db_username,$db_password) or die(mysql_error());
-        mysql_select_db("$db_name") or die(mysql_error());
-        
-        $sql = "INSERT INTO `PCB_Model` (`model`) VALUES('$model')";
-        $result=mysql_query($sql, $con) or die(mysql_error());
-        
-        mysql_close($con);
-        header('Location:Ampro_model_menu.php');
-    }
+
 ?>
 <p>
 Logged in as: <?= $fgmembersite->UserFullName() ?>
@@ -82,7 +98,7 @@ Logged in as: <?= $fgmembersite->UserFullName() ?>
 <a href='Ampro_model_menu.php'>Back to Edit Model Name List Main Page</a>
 </p>
 <p>&nbsp;</p>
-<p style=" position: absolute; bottom: 0; left: 0; width: 100%; text-align: left;"><a href='Ampro_model_menu.php'>Back to Edit Model Name List Main Page</a></p>
+<!--<p style=" position: absolute; bottom: 0; left: 0; width: 100%; text-align: left;"><a href='Ampro_model_menu.php'>Back to Edit Model Name List Main Page</a></p>-->
 </div>
 </body>
 </html>
